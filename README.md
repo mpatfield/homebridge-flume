@@ -26,7 +26,7 @@ Homebridge plugin to integrate Flume devices into HomeKit
 
 - To use this plugin, you will need to already have:
   - [Homebridge](https://homebridge.io): v1.6 or [HOOBS](https://hoobs.org): v4.3 installed - refer to the links for more information and installation instructions.
-  - Node: latest version of v16 or v18 - any other major version is not supported.
+  - Node: latest version of v18, v20 or v22 - any other major version is not supported.
 
 ### Setup
 

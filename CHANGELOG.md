@@ -2,6 +2,10 @@
 
 All notable changes to homebridge-flume will be documented in this file.
 
+## 3.0.3 (2024-07-23)
+
+- Maintenance release
+
 ## 3.0.2 (2023-03-24)
 
 ### Fixed
