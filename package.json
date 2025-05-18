@@ -46,7 +46,7 @@
     "url": "https://github.com/sponsors/mpatfield"
   },
   "dependencies": {
-    "@homebridge/plugin-ui-utils": "^1.0.3",
+    "@homebridge/plugin-ui-utils": "^2.0.2",
     "axios": "^1.7.2",
     "jwt-decode": "^4.0.0"
   },
