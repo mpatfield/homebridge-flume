@@ -1,6 +1,6 @@
 ---
 name: Feature Request
-about: Submit new ideas for the plugin.
+about: Submit new ideas for the plugin
 title: ''
 labels: ''
 assignees: ''
