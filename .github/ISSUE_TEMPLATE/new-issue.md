@@ -1,5 +1,5 @@
 ---
-name: 🚨 Problem/Bug Alert
+name: Bug/Issue
 about: The plugin isn't working as expected or it's showing an error.
 title: ''
 labels: ''
@@ -38,12 +38,12 @@ assignees: ''
 
 
 ### Please paste any relevant logs below.
+
 <!-- ABOUT LOGS
-   → More logging can enabled with 'Debug Logging' in the plugin settings.
-   → If you are posting an error then it is helpful for me to also see
-     the previous few lines as this can show the cause of the error.
-   → Please enter the logs between the two ``` lines below so that the
-     logs are formatted in a way which is easier to read.
+  → If you are posting an error then it is helpful for me to also see
+   ...the previous few lines as this can show the cause of the error.
+  → Please enter the logs between the two ``` lines below so that
+   ...the logs are formatted in a way which is easier to read.
 -->
 
 ```

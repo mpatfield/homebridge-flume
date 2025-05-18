@@ -1,5 +1,5 @@
 ---
-name: 🆕 Device/Feature Request
+name: Feature Request
 about: Submit new ideas for the plugin.
 title: ''
 labels: ''
