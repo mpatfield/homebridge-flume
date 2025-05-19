@@ -2,6 +2,11 @@
 
 All notable changes to homebridge-flume will be documented in this file.
 
+## 3.0.4 (2025-05-19)
+
+- Updating README and other metadata to reflect new plugin ownership
+- Getting plugin ready for Homebridge v2
+
 ## 3.0.3 (2024-07-23)
 
 - Maintenance release
