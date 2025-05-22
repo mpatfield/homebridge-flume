@@ -25,11 +25,9 @@ Once you have completed [Configuration](https://github.com/mpatfield/homebridge-
 
 <img src="https://github.com/mpatfield/homebridge-flume/blob/latest/img/screenshot_1.png"> <img src="https://github.com/mpatfield/homebridge-flume/blob/latest/img/screenshot_2.png">
 
-If you use a more advanced HomeKit app like the Eve app, you will see some additional information about your water use.
+If you use a more advanced HomeKit app like [Eve](https://apps.apple.com/us/app/eve-for-matter-homekit/id917695792) or [Controller for Homekit](https://apps.apple.com/us/app/controller-for-homekit/id1198176727), you will see some additional information about your water use. Unfortunately, Apple currently doesn't offer a way to display this in the Home app.
 
 <img src="https://github.com/mpatfield/homebridge-flume/blob/latest/img/screenshot_3.png">
-
-Unfortunately, this is all the plugin is able to do. This is due to limitations in what HomeKit offers.
 
 ## Configuration
 

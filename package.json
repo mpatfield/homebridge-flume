@@ -1,10 +1,12 @@
 {
   "name": "homebridge-flume",
   "alias": "Flume",
-  "version": "3.0.4",
+  "displayName": "Flume",
+  "version": "3.0.5-beta.0",
   "author": {
     "name": "mpatfield"
   },
+  "platform": "Flume",
   "description": "Homebridge plugin to integrate Flume devices into HomeKit.",
   "homepage": "https://github.com/mpatfield/homebridge-flume#readme",
   "homebridge": {
@@ -12,7 +14,7 @@
     "name": "homebridge-flume"
   },
   "type": "module",
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "keywords": [
     "homebridge",
     "homebridge-plugin",
@@ -31,7 +33,7 @@
     "build": "rimraf ./dist && tsc",
     "lint": "eslint . --max-warnings=0",
     "prepublishOnly": "npm run lint && npm run build",
-    "rebuild": "rm -rf package-lock.json && rm -rf node_modules && npm install"
+    "watch": "npm run build && npm link && nodemon"
   },
   "engines": {
     "homebridge": "^1.8.0 || ^2.0.0-beta.0",

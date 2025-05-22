@@ -1,0 +1,24 @@
+{
+  "success":true,
+  "code":602,
+  "message":"Request OK",
+  "http_code":200,
+  "http_message":"OK",
+  "detailed":null,
+  "data":[
+    {
+      "id":"12345",
+      "type":2,
+      "location_id":12345,
+      "user_id":12345,
+      "bridge_id":"12345",
+      "oriented":true,
+      "last_seen":"2025-05-22T02:33:47.000Z",
+      "connected":true,
+      "battery_level":"high",
+      "product":"flume2.5"
+    }
+  ],
+  "count":1,
+  "pagination":null
+}

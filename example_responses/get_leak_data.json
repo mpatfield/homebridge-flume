@@ -1,0 +1,15 @@
+{
+  "success":true,
+  "code":602,
+  "message":"Request OK",
+  "http_code":200,
+  "http_message":"OK",
+  "detailed":null,
+  "data":[
+    {
+      "active":false
+    }
+  ],
+  "count":1,
+  "pagination":null
+}

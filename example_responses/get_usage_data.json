@@ -1,0 +1,29 @@
+{
+  "success":true,
+  "code":602,
+  "message":"Request OK",
+  "http_code":200,
+  "http_message":"OK",
+  "detailed":null,
+  "data":[
+    {
+      "today":[
+        {
+        "value":78.2837489
+        }
+      ],
+      "month":[
+        {
+        "value":1526.52965208
+        }
+      ],
+      "lastMonth":[
+        {
+        "value":4415.10830484
+        }
+      ]
+    }
+  ],
+  "count":0,
+  "pagination":null
+}

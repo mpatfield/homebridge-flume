@@ -3,10 +3,11 @@
   "pluginType": "platform",
   "singular": true,
   "customUi": true,
-  "customUiPath": "./lib/homebridge-ui",
+  "customUiPath": "./src/homebridge-ui",
   "headerDisplay": "<p align=\"center\"><img width=\"60%\" src=\"https://github.com/mpatfield/homebridge-flume/blob/latest/img/banner.png\"></p><p align=\"center\">For help and support please visit <a href=\"https://github.com/mpatfield/homebridge-flume/\">GitHub</a>. We hope you find this plugin useful!</p>",
   "schema": {
     "type": "object",
+    "required": ["username", "password", "clientId", "clientSecret", "refreshInterval"],
     "properties": {
       "name": {
         "title": "Plugin Name",
@@ -14,16 +15,14 @@
         "default": "Flume"
       },
       "username": {
-        "title": "Username",
+        "title": "Flume Username",
         "type": "string",
-        "required": true,
-        "description": "Your Flume username."
+        "required": true
       },
       "password": {
-        "title": "Password",
+        "title": "Flume Password",
         "type": "string",
-        "required": true,
-        "description": "Your Flume password."
+        "required": true
       },
       "clientId": {
         "title": "Client ID",
@@ -36,18 +35,20 @@
         "type": "string",
         "placeholder": "1234567890ABCDEFGHIJ",
         "required": true,
-        "description": "Your Flume Client ID and Client Secret can be found at https://portal.flumetech.com."
+        "description": "Your Flume Client ID and Client Secret can be found at https://portal.flumetech.com"
       },
       "disableDeviceLogging": {
         "type": "boolean",
         "title": "Disable Device Logging",
-        "description": "Global logging setting for accessory status changes. If true then accessory status changes will not be logged."
+        "default": false,
+        "description": "If true then accessory status changes will not be logged"
       },
       "refreshInterval": {
         "title": "Refresh Interval",
         "type": "integer",
-        "placeholder": 2,
-        "description": "Number of minutes between requests to Flume for device leak information. Must be 1 or more."
+        "default": 2,
+        "minimum": 1,
+        "description": "Number of minutes between requests to Flume for leak information"
       }
     }
   },
@@ -60,7 +61,6 @@
     {
       "type": "fieldset",
       "title": "Advanced Settings",
-      "description": "Advanced settings for the plugin, including refresh options.",
       "expandable": true,
       "items": ["disableDeviceLogging", "refreshInterval"]
     }

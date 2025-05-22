@@ -1,0 +1,9 @@
+{
+  "user_id": 12345,
+  "type": "USER",
+  "scope": [ "read:personal", "update:personal", "query:personal" ],
+  "iat": 0,
+  "exp": 0,
+  "iss": "flume_oauth",
+  "sub": ""
+}

@@ -5,7 +5,7 @@
       "DOM",
       "ES2022"
     ],
-    "rootDir": "lib",
+    "rootDir": "src",
     "module": "ES2022",
     "moduleResolution": "node",
     "strict": true,
@@ -20,6 +20,6 @@
   "include": [
     "eslint.config.js",
     "homebridge-ui",
-    "lib"
+    "src"
   ]
 }
