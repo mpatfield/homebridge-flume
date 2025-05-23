@@ -34,7 +34,7 @@ const FULL_REFRESH_INTERVAL = 15 * MINUTE;
 const RETRY_INTERVAL = 30 * SECOND;
 
 export class FlumeAPI {
-  private auth?: Auth;
+  private _auth?: Auth | null;
   private userId?: string;
 
   private readonly _devices: Map<string, Device> = new Map();
@@ -48,9 +48,11 @@ export class FlumeAPI {
     private readonly clientId: string,
     private readonly clientSecret: string,
     private readonly refreshInterval: number,
+    private storagePath: string,
     private readonly log: Logger,
     private readonly isBeta: boolean,
   ) {
+    this.auth = Auth.load(this.storagePath, this.clientId);
   }
 
   static async connect(
@@ -59,15 +61,23 @@ export class FlumeAPI {
     clientId: string,
     clientSecret: string,
     refreshInterval: number,
+    storagePath: string,
     log: Logger,
     isBeta: boolean,
   ): Promise<FlumeAPI> {
-    const api = new FlumeAPI(username, password, clientId, clientSecret, refreshInterval, log, isBeta);
-    if (await api.authenticate()) {
+    const api = new FlumeAPI(username, password, clientId, clientSecret, refreshInterval, storagePath, log, isBeta);
+
+    let shouldContinue = true;
+    if (!api.auth) {
+      shouldContinue = await api.authenticate();
+    }
+
+    if (shouldContinue) {
       await api.getDevices();
       await api.synchronizeData();    
       api.startSyncTimer();
     }
+    
     return api;
   }
 
@@ -152,6 +162,19 @@ export class FlumeAPI {
     return await retry();
   }
 
+  private get auth(): Auth | null {
+    return this._auth ?? null;
+  }
+  
+  private set auth(value: Auth | null) {
+    this._auth = value;
+
+    if (this._auth) {
+      this._auth.save(this.storagePath, this.clientId);
+      this.userId = (jwtDecode(this._auth.token) as Types.JwtPayload).user_id;
+    }
+  }
+
   private async authenticate(): Promise<boolean> {
 
     const data = {
@@ -169,7 +192,6 @@ export class FlumeAPI {
     } 
     
     this.auth = new Auth(tokenData[0]);
-    this.userId = (jwtDecode(this.auth.token) as Types.JwtPayload).user_id;
 
     return true;
   }
@@ -215,6 +237,8 @@ export class FlumeAPI {
   }
 
   private async getDevices(): Promise<boolean> {
+
+    await this.refreshAuthIfNecessary();
 
     const deviceDatum = await this.do<Types.DeviceData>(this.getDevices.name, null, true, URL_GET_DEVICES, this.userId);
     if (!deviceDatum) {

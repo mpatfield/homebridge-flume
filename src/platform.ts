@@ -10,11 +10,13 @@ import strings from './lang/en.js';
 import { FlumeAPI } from './model/api.js';
 import { PLATFORM_ALIAS } from './index.js';
 import { Device } from './model/device.js';
+import { STORAGE_FILE_NAME } from './tools/storage.js';
 
 const PLUGIN_NAME = 'homebridge-flume';
 
 export class FlumePlatform implements DynamicPlatformPlugin {
 
+  private readonly storagePath: string;
   private isBeta: boolean = false;
   private flumeAPI: FlumeAPI | null = null;
 
@@ -25,6 +27,8 @@ export class FlumePlatform implements DynamicPlatformPlugin {
     readonly config: PlatformConfig,
     readonly api: API,
   ) {
+
+    this.storagePath = path.join(api.user.storagePath(), STORAGE_FILE_NAME);
 
     const packageVersion = this.packageVersion;
     this.isBeta = this.packageVersion.includes('beta');
@@ -66,6 +70,7 @@ export class FlumePlatform implements DynamicPlatformPlugin {
       this.config.clientId,
       this.config.clientSecret,
       this.config.refreshInterval,
+      this.storagePath,
       this.log,
       this.isBeta,
     );
