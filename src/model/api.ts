@@ -8,15 +8,13 @@ import * as Types from './types.js';
 
 import strings from '../lang/en.js';
 import { FlumeResponse } from './types.js';
+import { MINUTE, SECOND } from './time.js';
 
 const URL_AUTH = 'https://api.flumetech.com/oauth/token';
 const URL_GET_DEVICES = 'https://api.flumetech.com/users/%s/devices?list_shared=true';
 const URL_GET_DEVICE = 'https://api.flumetech.com/users/%s/devices/%s';
 const URL_WATER_USAGE = 'https://api.flumetech.com/users/%s/devices/%s/query';
 const URL_LEAK_INFO = 'https://api.flumetech.com/users/%s/devices/%s/leaks/active';
-
-const SECOND = 1000;
-const MINUTE = 60 * SECOND;
 
 const HTTP_TIMEOUT = 10 * SECOND;
 
@@ -55,7 +53,7 @@ export class FlumeAPI {
   ) {
   }
 
-  static async login(
+  static async connect(
     username: string,
     password: string,
     clientId: string,
@@ -65,7 +63,7 @@ export class FlumeAPI {
     isBeta: boolean,
   ): Promise<FlumeAPI> {
     const api = new FlumeAPI(username, password, clientId, clientSecret, refreshInterval, log, isBeta);
-    if (await api.login()) {
+    if (await api.authenticate()) {
       await api.getDevices();
       await api.synchronizeData();    
       api.startSyncTimer();
@@ -154,7 +152,7 @@ export class FlumeAPI {
     return await retry();
   }
 
-  private async login(): Promise<boolean> {
+  private async authenticate(): Promise<boolean> {
 
     const data = {
       grant_type: 'password',
@@ -164,7 +162,7 @@ export class FlumeAPI {
       password: this.password,
     };
  
-    const tokenData = await this.do<Types.TokenData>(this.login.name, data, true, URL_AUTH);
+    const tokenData = await this.do<Types.TokenData>(this.authenticate.name, data, true, URL_AUTH);
 
     if (!tokenData) {
       return false;
@@ -180,7 +178,7 @@ export class FlumeAPI {
 
     if (!this.auth?.refresh) {
       this.logHTTP(LogLevel.DEBUG, this.authRefresh.name, strings.noRefreshToken);
-      return await this.login();
+      return await this.authenticate();
     }
 
     const data = {
@@ -256,7 +254,6 @@ export class FlumeAPI {
 
   private async getUsageData(deviceId: string): Promise<Types.UsageData | null> {
 
-    // TODO need to make sure this is giving the correct values at the end of the day
     // Generate dates for the query data
     const now = new Date();
     const pad = (n: number) => n.toString().padStart(2, '0');

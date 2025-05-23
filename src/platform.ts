@@ -60,7 +60,7 @@ export class FlumePlatform implements DynamicPlatformPlugin {
       return;
     }
 
-    this.flumeAPI = await FlumeAPI.login(
+    this.flumeAPI = await FlumeAPI.connect(
       this.config.username,
       this.config.password,
       this.config.clientId,

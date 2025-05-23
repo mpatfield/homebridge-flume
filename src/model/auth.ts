@@ -1,3 +1,4 @@
+import { DAY, SECOND } from './time';
 import { TokenData } from './types';
 
 export class Auth {
@@ -9,7 +10,6 @@ export class Auth {
   constructor(data: TokenData) {
     this.token = data.access_token;
     this.refresh = data.refresh_token;
-    this.expiry = Date.now() + data.expires_in;
-
+    this.expiry = Date.now() + (data.expires_in * SECOND) - DAY;
   }
 }
