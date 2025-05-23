@@ -96,10 +96,11 @@ export class FlumeAPI {
     caller: string, 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     data: any | null, 
+    shouldReturnArray: boolean,
     shouldRetry: boolean,
     url: string, 
     ...parameters: (string|undefined)[]
-  ):  Promise<T[] | null> {
+  ):  Promise<T | null> {
 
     parameters.forEach(param => {
       url = url.replace('%s', param ?? '');
@@ -128,11 +129,11 @@ export class FlumeAPI {
 
       this.logIfBeta(caller, res.data);
 
-      return res.data.data;
+      return shouldReturnArray ? res.data.data as T : res.data.data[0];
 
     } catch (err: unknown) {
       if (shouldRetry) {
-        return this.retryIfPossible<T>(err, caller, () => this.do<T>(caller, data, shouldRetry, url, ...parameters));
+        return this.retryIfPossible<T>(err, caller, () => this.do<T>(caller, data, shouldReturnArray, shouldRetry, url, ...parameters));
       } else {
         this.logHTTP(LogLevel.WARN, caller, (err as Error).message);
         return null;
@@ -141,7 +142,7 @@ export class FlumeAPI {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private async retryIfPossible<T = any>(err: unknown, caller: string, retry: () => (Promise<T[] | null>)): Promise<T[] | null> {
+  private async retryIfPossible<T = any>(err: unknown, caller: string, retry: () => (Promise<T | null>)): Promise<T | null> {
 
     if (!isAxiosError(err)) {
       this.logHTTP(LogLevel.WARN, caller, (err as Error).message);
@@ -184,13 +185,13 @@ export class FlumeAPI {
       password: this.password,
     };
  
-    const tokenData = await this.do<Types.TokenData>(this.authenticate.name, data, true, URL_AUTH);
+    const tokenData = await this.do<Types.TokenData>(this.authenticate.name, data, false, true, URL_AUTH);
 
     if (!tokenData) {
       return false;
     } 
     
-    this.auth = new Auth(tokenData[0]);
+    this.auth = new Auth(tokenData);
 
     return true;
   }
@@ -209,13 +210,13 @@ export class FlumeAPI {
       refresh_token: this.auth.refresh,
     };
     
-    const tokenData = await this.do<Types.TokenData>(this.authRefresh.name, data, true, URL_AUTH);
+    const tokenData = await this.do<Types.TokenData>(this.authRefresh.name, data, false, true, URL_AUTH);
 
     if (!tokenData) {
       return false;
     } 
     
-    this.auth = new Auth(tokenData[0]);
+    this.auth = new Auth(tokenData);
 
     return true;
   }
@@ -239,7 +240,7 @@ export class FlumeAPI {
 
     await this.refreshAuthIfNecessary();
 
-    const deviceDatum = await this.do<Types.DeviceData>(this.getDevices.name, null, true, URL_GET_DEVICES, this.userId);
+    const deviceDatum = await this.do<Types.DeviceData[]>(this.getDevices.name, null, true, true, URL_GET_DEVICES, this.userId);
     if (!deviceDatum) {
       return false;
     }
@@ -255,24 +256,24 @@ export class FlumeAPI {
   }
 
   private async getDeviceData(deviceId: string): Promise<Types.DeviceData | null> {
-    const deviceDatum = await this.do<Types.DeviceData>(this.getDeviceData.name, null, false, URL_GET_DEVICE, this.userId, deviceId);
+    const deviceDatum = await this.do<Types.DeviceData>(this.getDeviceData.name, null, false, false, URL_GET_DEVICE, this.userId, deviceId);
 
     if (!deviceDatum) {
       return null;
     }
 
-    return deviceDatum[0];
+    return deviceDatum;
   }
 
   async getLeakData(deviceId: string): Promise<Types.LeakData | null> {
 
-    const leakDatum = await this.do<Types.LeakData>(this.getLeakData.name, null, false, URL_LEAK_INFO, this.userId, deviceId);
+    const leakDatum = await this.do<Types.LeakData>(this.getLeakData.name, null, false, false, URL_LEAK_INFO, this.userId, deviceId);
 
     if (!leakDatum) {
       return null;
     }
 
-    return leakDatum[0];
+    return leakDatum;
   }
 
   private async getUsageData(deviceId: string): Promise<Types.UsageData | null> {
@@ -313,13 +314,13 @@ export class FlumeAPI {
       ],
     };
 
-    const usageDatum = await this.do<Types.UsageData>(this.getUsageData.name, data, false, URL_WATER_USAGE, this.userId, deviceId);
+    const usageDatum = await this.do<Types.UsageData>(this.getUsageData.name, data, false, false, URL_WATER_USAGE, this.userId, deviceId);
 
     if (!usageDatum) {
       return null;
     }
 
-    return usageDatum[0];
+    return usageDatum;
   }
 
   private async synchronizeData(): Promise<void> {
