@@ -49,6 +49,12 @@
         "default": 2,
         "minimum": 1,
         "description": "Number of minutes between requests to Flume for leak information"
+      },
+      "verbose": {
+        "title": "Verbose",
+        "type": "boolean",
+        "required": false,
+        "description": "Enable additional debug logging"
       }
     }
   },
@@ -62,7 +68,7 @@
       "type": "fieldset",
       "title": "Advanced Settings",
       "expandable": true,
-      "items": ["disableDeviceLogging", "refreshInterval"]
+      "items": ["disableDeviceLogging", "verbose", "refreshInterval"]
     }
   ]
 }

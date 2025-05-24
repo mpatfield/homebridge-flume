@@ -5,7 +5,6 @@ const langEn = {
   redacted: 'redacted',
 
   // Startup
-  beta: 'This is a beta version of Flume. You will experience more logging than normal.',
   complete: '✓ Setup complete.',
   newDevice: 'Adding new device:',
   removeDevice: 'Removing device:',

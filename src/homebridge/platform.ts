@@ -18,7 +18,6 @@ const PLUGIN_NAME = 'homebridge-flume';
 export class FlumePlatform implements DynamicPlatformPlugin {
 
   private readonly storagePath: string;
-  private isBeta: boolean = false;
   private flumeAPI: FlumeAPI | null = null;
 
   private readonly accessories: Map<string, PlatformAccessory> = new Map();
@@ -32,7 +31,6 @@ export class FlumePlatform implements DynamicPlatformPlugin {
     this.storagePath = path.join(api.user.storagePath(), STORAGE_FILE_NAME);
 
     const packageVersion = this.packageVersion;
-    this.isBeta = this.packageVersion.includes('beta');
 
     this.log.info(
       'v%s | System %s | Node %s | HB v%s | HAPNodeJS v%s',
@@ -42,11 +40,6 @@ export class FlumePlatform implements DynamicPlatformPlugin {
       api.serverVersion,
       api.hap.HAPLibraryVersion(),
     );
-
-    if (this.isBeta) {
-      const divide = '*'.repeat(strings.beta.length);
-      this.log.warn(`\n${divide}\n${strings.beta}\n${divide}`);
-    }
 
     this.api.on('didFinishLaunching', () => this.didFinishLaunching());
     this.api.on('shutdown', () => this.shutdown());
@@ -73,7 +66,7 @@ export class FlumePlatform implements DynamicPlatformPlugin {
       this.config.refreshInterval,
       this.storagePath,
       this.log,
-      this.isBeta,
+      this.config.verbose,
     );
 
     const devices = this.flumeAPI.devices;

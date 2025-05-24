@@ -51,7 +51,7 @@ export class FlumeAPI {
     private readonly refreshInterval: number,
     private storagePath: string,
     private readonly log: Logger,
-    private readonly isBeta: boolean,
+    private readonly verbose: boolean,
   ) {
     this.auth = Auth.load(this.storagePath, this.clientId);
   }
@@ -64,9 +64,9 @@ export class FlumeAPI {
     refreshInterval: number,
     storagePath: string,
     log: Logger,
-    isBeta: boolean,
+    verbose: boolean,
   ): Promise<FlumeAPI> {
-    const api = new FlumeAPI(username, password, clientId, clientSecret, refreshInterval, storagePath, log, isBeta);
+    const api = new FlumeAPI(username, password, clientId, clientSecret, refreshInterval, storagePath, log, verbose);
 
     let shouldContinue = true;
     if (!api.auth) {
@@ -131,7 +131,7 @@ export class FlumeAPI {
 
       const returnValue = shouldReturnArray ? res.data.data as T : res.data.data[0];
 
-      this.logIfBeta(caller, res.data);
+      this.logIfVerbose(caller, res.data);
       this.retryIndex = 0;
 
       return returnValue;
@@ -358,9 +358,9 @@ export class FlumeAPI {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private logIfBeta(caller: string, data: any) {
+  private logIfVerbose(caller: string, data: any) {
 
-    if (!this.isBeta) {
+    if (!this.verbose) {
       return;
     }
 
