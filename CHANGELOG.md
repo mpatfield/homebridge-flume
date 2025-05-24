@@ -2,24 +2,11 @@
 
 All notable changes to homebridge-flume will be documented in this file.
 
-## 3.0.5-beta (2025-05-23)
-
-# THIS BETA RELEASE IS A MAJOR REWRITE - PLEASE EXPECT SOME BUGS!
-
-While there are no new features, this beta is a major rewrite to cleanup and modernize a lot of very old code. This will make it much easier to maintain and improve this plugin going forwards. As such, please expect some bugs.
-
-If you run into any issues, please [open a ticket](https://github.com/mpatfield/homebridge-flume/issues) on GitHub.
-
-Thanks for your patience and for helping to test!
-
-### Fixed
-
-- Auth refresh happening way too frequently
-- Removed older unused custom characteristics
+## 3.0.5 (2025-05-24)
 
 ### Changed
 
-- Better error handling
+While there are no new features, this release is a major rewrite to cleanup and modernize a lot of very old code. This will make it much easier to maintain and improve this plugin going forward.
 
 ## 3.0.4 (2025-05-19)
 
