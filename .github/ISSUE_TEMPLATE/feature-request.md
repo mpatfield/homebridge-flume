@@ -2,7 +2,7 @@
 name: Feature Request
 about: Submit new ideas for the plugin
 title: ''
-labels: ''
+labels: 'feature request'
 assignees: ''
 
 ---

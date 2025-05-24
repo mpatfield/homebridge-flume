@@ -2,7 +2,7 @@
 name: Bug/Issue
 about: The plugin isn't working as expected or it's showing an error
 title: ''
-labels: ''
+labels: 'bug'
 assignees: ''
 
 ---
