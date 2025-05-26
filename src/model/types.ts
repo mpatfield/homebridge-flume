@@ -22,6 +22,15 @@ export type TokenData = {
   refresh_token: string;
 };
 
+export type LocationsResponse = {
+  data: LocationData[];
+}
+
+export type LocationData = {
+  id: string;
+  name: string;
+}
+
 export type DeviceResponse = {
   data: DeviceData[];
 };
@@ -29,6 +38,7 @@ export type DeviceResponse = {
 export type DeviceData = {
   id: string;
   bridge_id: string;
+  location_id: string;
   product: string;
   battery_level: string;
   connected: boolean;

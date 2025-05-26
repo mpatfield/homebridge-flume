@@ -10,6 +10,7 @@ import strings from '../lang/en.js';
 import { MINUTE, SECOND } from '../tools/time.js';
 
 const URL_AUTH = 'https://api.flumetech.com/oauth/token';
+const URL_GET_LOCATIONS = 'https://api.flumewater.com/users/%s/locations';
 const URL_GET_DEVICES = 'https://api.flumetech.com/users/%s/devices?list_shared=true';
 const URL_GET_DEVICE = 'https://api.flumetech.com/users/%s/devices/%s';
 const URL_WATER_USAGE = 'https://api.flumetech.com/users/%s/devices/%s/query';
@@ -36,6 +37,7 @@ export class FlumeAPI {
   private _auth?: Auth | null;
   private userId?: string;
 
+  readonly locationNames: Map<string, string> = new Map();
   private readonly _devices: Map<string, Device> = new Map();
 
   private retryIndex: number = 0;
@@ -76,6 +78,7 @@ export class FlumeAPI {
     }
 
     if (shouldContinue) {
+      await api.getLocations();
       await api.getDevices();
       await api.synchronizeData();    
       api.startSyncTimer();
@@ -245,6 +248,23 @@ export class FlumeAPI {
     }, MINUTE * this.refreshInterval);
   }
 
+  private async getLocations(): Promise<boolean> {
+
+    await this.refreshAuthIfNecessary();
+
+    const locationDatum = await this.do<Types.LocationData[]>(this.getLocations.name, null, true, true, URL_GET_LOCATIONS, this.userId);
+
+    if (!locationDatum) {
+      return false;
+    }
+
+    locationDatum.forEach(locationData => {
+      this.locationNames.set(locationData.id, locationData.name);
+    });
+
+    return true;
+  }
+
   private async getDevices(): Promise<boolean> {
 
     await this.refreshAuthIfNecessary();
@@ -265,24 +285,24 @@ export class FlumeAPI {
   }
 
   private async getDeviceData(deviceId: string): Promise<Types.DeviceData | null> {
-    const deviceDatum = await this.do<Types.DeviceData>(this.getDeviceData.name, null, false, false, URL_GET_DEVICE, this.userId, deviceId);
+    const deviceData = await this.do<Types.DeviceData>(this.getDeviceData.name, null, false, false, URL_GET_DEVICE, this.userId, deviceId);
 
-    if (!deviceDatum) {
+    if (!deviceData) {
       return null;
     }
 
-    return deviceDatum;
+    return deviceData;
   }
 
   async getLeakData(deviceId: string): Promise<Types.LeakData | null> {
 
-    const leakDatum = await this.do<Types.LeakData>(this.getLeakData.name, null, false, false, URL_LEAK_INFO, this.userId, deviceId);
+    const leakData = await this.do<Types.LeakData>(this.getLeakData.name, null, false, false, URL_LEAK_INFO, this.userId, deviceId);
 
-    if (!leakDatum) {
+    if (!leakData) {
       return null;
     }
 
-    return leakDatum;
+    return leakData;
   }
 
   private async getUsageData(deviceId: string): Promise<Types.UsageData | null> {
@@ -323,13 +343,13 @@ export class FlumeAPI {
       ],
     };
 
-    const usageDatum = await this.do<Types.UsageData>(this.getUsageData.name, data, false, false, URL_WATER_USAGE, this.userId, deviceId);
+    const usageData = await this.do<Types.UsageData>(this.getUsageData.name, data, false, false, URL_WATER_USAGE, this.userId, deviceId);
 
-    if (!usageDatum) {
+    if (!usageData) {
       return null;
     }
 
-    return usageDatum;
+    return usageData;
   }
 
   private async synchronizeData(): Promise<void> {

@@ -115,8 +115,9 @@ export class FlumePlatform implements DynamicPlatformPlugin {
       this.accessories.set(uuid, accessory);
     }
 
+    const name = this.flumeAPI?.locationNames.get(device.locationId);
     const units = this.config.units ?? VolumeUnits.GALLONS;
-    new FlumeAccessory(this, accessory, device, units, this.config.disableDeviceLogging);
+    new FlumeAccessory(this, accessory, device,  name, units, this.config.disableDeviceLogging);
   }
 
   configureAccessory(accessory: PlatformAccessory): void {

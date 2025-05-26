@@ -38,6 +38,7 @@ export class FlumeAccessory {
     private readonly platform: FlumePlatform, 
     private readonly accessory: PlatformAccessory,
     private readonly device: Device,
+    name: string | null | undefined,
     private readonly units: VolumeUnits,
     private readonly disableLogging: boolean,
   ) {
@@ -47,12 +48,11 @@ export class FlumeAccessory {
     this.Service = this.HAP.Service;
 
     accessory.getService(this.Service.AccessoryInformation)!
-      .setCharacteristic(this.Characteristic.Name, strings.brand)
-      .setCharacteristic(this.Characteristic.ConfiguredName, strings.brand)
+      .setCharacteristic(this.Characteristic.Name, name ?? strings.brand)
+      .setCharacteristic(this.Characteristic.ConfiguredName, name ?? strings.brand)
       .setCharacteristic(this.Characteristic.Manufacturer, strings.brand)
       .setCharacteristic(this.Characteristic.SerialNumber, device.id)
       .setCharacteristic(this.Characteristic.Model, device.productName)
-      .setCharacteristic(this.Characteristic.Identify, true)
       .setCharacteristic(this.Characteristic.FirmwareRevision, platform.packageVersion);
 
     this.charLeakDetected = this.Characteristic.LeakDetected;
@@ -111,8 +111,8 @@ export class FlumeAccessory {
     this.lastMonthUsageChar.updateValue(this.device.usageLastMonth);
   }
 
-  private stringForUnits(units: VolumeUnits): string {
-    switch(units) {
+  private stringForUnits(): string {
+    switch(this.units) {
     case VolumeUnits.GALLONS: return strings.customCharUnitsGallons;
     case VolumeUnits.LITERS: return strings.customCharUnitsLiters;
     case VolumeUnits.CUBIC_FEET: return strings.customCharUnitsCubicFeet;
@@ -141,7 +141,7 @@ export class FlumeAccessory {
       result = this.leakService.getCharacteristic(char.name)!;
     } else {
 
-      const unitsString = this.stringForUnits(this.units);
+      const unitsString = this.stringForUnits();
       const customCharacteristic = class TodayUsage extends this.Characteristic {
         constructor() {
           super(char.name, char.uuid, {

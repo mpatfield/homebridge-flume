@@ -5,6 +5,7 @@ const BATTERY_LEVEL_LOW = 'low';
 export class Device {
 
   readonly id: string;
+  readonly locationId: string;
   readonly productName: string;
 
   isBatteryLow: boolean;
@@ -20,6 +21,7 @@ export class Device {
 
   constructor(data: DeviceData) {
     this.id = data.id;
+    this.locationId = data.location_id;
     this.productName = data.product;
     this.isDisconnected = !data.connected;
     this.isBatteryLow = data.battery_level === BATTERY_LEVEL_LOW;

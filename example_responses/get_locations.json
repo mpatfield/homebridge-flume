@@ -1,0 +1,29 @@
+{
+   "success":true,
+   "code":602,
+   "message":"Request OK",
+   "http_code":200,
+   "http_message":"OK",
+   "detailed":null,
+   "data":[
+      {
+         "id":12345,
+         "user_id":12345,
+         "name":"Home",
+         "primary_location":true,
+         "address":"123 Fake Street",
+         "address_2":"",
+         "city":"Nowhere",
+         "state":"ZZ",
+         "postal_code":"12345",
+         "country":"United States",
+         "tz":"America/Los_Angeles",
+         "installation":"DONE",
+         "insurer_id":99,
+         "building_type":"SINGLE_FAMILY_HOME",
+         "away_mode":false
+      }
+   ],
+   "count":1,
+   "pagination":null
+}
