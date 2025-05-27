@@ -2,18 +2,25 @@
 
 All notable changes to homebridge-flume will be documented in this file.
 
-## 3.1.0 (2025-05-TODO)
+## 3.1.0 (2025-05-28)
 
 ### Added
 
-- Devices can now be excluded from HomeKit by adding devce IDs in config
+- Devices can now be excluded from HomeKit by adding device IDs in config
 - Fetch device name from Flume location information
 - Volume units for usage data can be changed in config
 
 ### Changed
 
+- Persist tokens across launches to avoid unnecessary authentication calls
+- Limit the number of http retries with exponential backoff
 - Beta versions no longer log unless "verbose" config flag is set to true
 - Simplified config settings
+- Redact all personal info in logs
+
+### Fixed
+
+- `disableDeviceLogging` actually stops logging accessory changes
 
 ## 3.0.5 (2025-05-24)
 
