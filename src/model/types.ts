@@ -1,5 +1,7 @@
 import { AxiosResponse } from 'axios';
 
+export const SENSITIVE_KEYS = ['access_token', 'address', 'address_2', 'bridge_id', 'id', 'refresh_token', 'user_id'];
+
 export enum VolumeUnits {
   GALLONS = 'GALLONS',
   LITERS = 'LITERS',

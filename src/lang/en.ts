@@ -2,7 +2,7 @@ const langEn = {
   
   // General
   brand: 'Flume',
-  redacted: 'redacted',
+  redacted: '****redacted****',
 
   // Startup
   complete: '✓ Setup complete.',

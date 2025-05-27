@@ -388,15 +388,10 @@ export class FlumeAPI {
 
     let message = JSON.stringify(data);
 
-    const token = data.data[0]?.access_token ?? this.auth?.token;
-    if (token) {
-      message = message.replaceAll(token, `**** ${strings.redacted} ****`);
-    }
-
-    const refresh = data.data[0]?.refresh_token ?? this.auth?.refresh;
-    if (refresh) {
-      message = message.replaceAll(refresh, `**** ${strings.redacted} ****`);
-    }
+    Types.SENSITIVE_KEYS.forEach(key => {
+      const regex = new RegExp(`"${key}"\\s*:\\s*(".*?"|\\d+|true|false|null)`, 'gi');
+      message = message.replace(regex, `"${key}": "${strings.redacted}"`);
+    });
 
     this.logHTTP(LogLevel.INFO, caller, message);
   }
