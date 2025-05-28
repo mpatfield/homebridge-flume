@@ -81,7 +81,7 @@ export class FlumePlatform implements DynamicPlatformPlugin {
     }
 
     devices.forEach((device) => {
-      this.initializeDevice(device);
+      this.initializeAccessory(device);
     });
 
     // Remove any stale accessories that don't appear in the device list
@@ -100,33 +100,38 @@ export class FlumePlatform implements DynamicPlatformPlugin {
     this.flumeAPI?.teardown();
   }
 
-  initializeDevice(device: Device): void {
+  initializeAccessory(device: Device): void {
 
     const uuid = this.api.hap.uuid.generate(device.id);
+    const name = this.flumeAPI?.locationNames.get(device.locationId);
 
     let accessory = this.accessories.get(uuid);
     if (!accessory) {
-      this.log.info(strings.newDevice, device.id);
+      this.log.info(strings.newDevice, name ?? device.id);
 
       accessory = new this.api.platformAccessory(strings.brand, uuid);
       accessory.context.deviceId = device.id;
+      accessory.context.deviceName = name;
 
       this.api.registerPlatformAccessories(PLUGIN_NAME, PLATFORM_ALIAS, [accessory]);
       this.accessories.set(uuid, accessory);
+    
+    } else if (!accessory.context.deviceName) {
+      accessory.context.deviceName = name;
+      this.api.updatePlatformAccessories([accessory]);
     }
 
-    const name = this.flumeAPI?.locationNames.get(device.locationId);
     const units = this.config.units ?? VolumeUnits.GALLONS;
     new FlumeAccessory(this, accessory, device,  name, units, this.config.disableDeviceLogging);
   }
 
   configureAccessory(accessory: PlatformAccessory): void {
-    this.log.info(strings.restoringDevice, accessory.context.deviceId);
+    this.log.info(strings.restoringDevice, accessory.context.deviceName ?? accessory.context.deviceId);
     this.accessories.set(accessory.UUID, accessory);
   }
   
   removeAccessory(accessory: PlatformAccessory): void {
-    this.log.info(strings.removeDevice, accessory.context.deviceId);
+    this.log.info(strings.removeDevice, accessory.context.deviceName ?? accessory.context.deviceId);
     this.api.unregisterPlatformAccessories(PLUGIN_NAME, PLATFORM_ALIAS, [accessory]);
     this.accessories.delete(accessory.UUID);
   }
