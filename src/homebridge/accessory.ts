@@ -3,8 +3,11 @@ import { Characteristic, Formats, HAP, LogLevel, Perms, PlatformAccessory, Servi
 import { FlumePlatform } from './platform.js';
 
 import strings from '../lang/en.js';
+
 import { Device } from '../model/device.js';
 import { VolumeUnits } from '../model/types.js';
+
+import getVersion from '../tools/version.js';
 
 class CustomCharacteristic {
   constructor(readonly uuid: string, readonly name: string) {
@@ -53,7 +56,7 @@ export class FlumeAccessory {
       .setCharacteristic(this.Characteristic.Manufacturer, strings.brand)
       .setCharacteristic(this.Characteristic.SerialNumber, device.id)
       .setCharacteristic(this.Characteristic.Model, device.productName)
-      .setCharacteristic(this.Characteristic.FirmwareRevision, platform.packageVersion);
+      .setCharacteristic(this.Characteristic.FirmwareRevision, getVersion());
 
     this.charLeakDetected = this.Characteristic.LeakDetected;
     this.charStatusLowBattery = this.Characteristic.StatusLowBattery;

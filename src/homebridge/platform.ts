@@ -1,7 +1,5 @@
-import fs from 'fs';
 import { API, DynamicPlatformPlugin, Logger, PlatformAccessory, PlatformConfig } from 'homebridge';
 import path from 'path';
-import { fileURLToPath } from 'url';
 
 import { FlumeAccessory } from './accessory.js';
 
@@ -12,6 +10,7 @@ import { Device } from '../model/device.js';
 
 import { STORAGE_FILE_NAME } from '../tools/storage.js';
 import { VolumeUnits } from '../model/types.js';
+import getVersion from '../tools/version.js';
 
 export const PLATFORM_ALIAS = 'Flume';
 const PLUGIN_NAME = 'homebridge-flume';
@@ -31,11 +30,9 @@ export class FlumePlatform implements DynamicPlatformPlugin {
 
     this.storagePath = path.join(api.user.storagePath(), STORAGE_FILE_NAME);
 
-    const packageVersion = this.packageVersion;
-
     this.log.info(
       'v%s | System %s | Node %s | HB v%s | HAPNodeJS v%s',
-      packageVersion,
+      getVersion(),
       process.platform,
       process.version,
       api.serverVersion,
@@ -44,17 +41,6 @@ export class FlumePlatform implements DynamicPlatformPlugin {
 
     this.api.on('didFinishLaunching', () => this.didFinishLaunching());
     this.api.on('shutdown', () => this.shutdown());
-  }
-
-  get packageVersion(): string {
-    try {
-      const __dirname = path.dirname(fileURLToPath(import.meta.url));
-      const packageJSONPath = path.join(__dirname, '../../package.json');
-      const packageJSON = JSON.parse(fs.readFileSync(packageJSONPath, { encoding: 'utf8' }));
-      return packageJSON.version;
-    } catch (error) {
-      return '0.0.0'; 
-    }
   }
 
   private async didFinishLaunching(): Promise<void> {
@@ -97,7 +83,6 @@ export class FlumePlatform implements DynamicPlatformPlugin {
       this.initializeAccessory(device);
     });
 
-    // Remove any stale accessories that don't appear in the device list
     this.accessories.forEach((accessory) => {
       if (!keepDevices.has(accessory.context.deviceId)) {
         this.removeAccessory(accessory);
