@@ -3,13 +3,13 @@ import path from 'path';
 
 import { FlumeAccessory } from './accessory.js';
 
-import strings from '../lang/en.js';
+import { setLanguage, strings } from '../i18n/i18n.js';
 
 import { FlumeAPI } from '../model/api.js';
 import { Device } from '../model/device.js';
+import { VolumeUnits } from '../model/types.js';
 
 import { STORAGE_FILE_NAME } from '../tools/storage.js';
-import { VolumeUnits } from '../model/types.js';
 import getVersion from '../tools/version.js';
 
 export const PLATFORM_ALIAS = 'Flume';
@@ -27,6 +27,9 @@ export class FlumePlatform implements DynamicPlatformPlugin {
     readonly config: PlatformConfig,
     readonly api: API,
   ) {
+
+    const userLang = Intl.DateTimeFormat().resolvedOptions().locale.split('-')[0];
+    setLanguage(userLang);
 
     this.storagePath = path.join(api.user.storagePath(), STORAGE_FILE_NAME);
 
@@ -52,7 +55,7 @@ export class FlumePlatform implements DynamicPlatformPlugin {
       !this.config.clientSecret ||
       !this.config.refreshInterval
     ) {
-      this.log.error(strings.badConfig);
+      this.log.error(strings.errors.badConfig);
       return;
     }
 
@@ -73,7 +76,7 @@ export class FlumePlatform implements DynamicPlatformPlugin {
     const devices = this.flumeAPI.devices.filter((device: Device) => !excludeDevices.has(device.id));
     if (devices.length === 0) {
       this.accessories.forEach((accessory) => this.removeAccessory(accessory));
-      this.log.warn(strings.noDevices);
+      this.log.warn(strings.errors.noDevices);
       this.shutdown();
       return;
     }
@@ -89,8 +92,8 @@ export class FlumePlatform implements DynamicPlatformPlugin {
       }
     });
 
-    const randIndex = Math.floor(Math.random() * strings.welcomeMessages.length);
-    this.log.info(strings.complete, strings.welcomeMessages[randIndex]);
+    const randIndex = Math.floor(Math.random() * strings.startup.welcome.length);
+    this.log.info(strings.startup.complete, strings.startup.welcome[randIndex]);
   }
 
   private shutdown(): void {
@@ -104,9 +107,14 @@ export class FlumePlatform implements DynamicPlatformPlugin {
 
     let accessory = this.accessories.get(uuid);
     if (!accessory) {
-      this.log.info(strings.newDevice, name ?? device.id);
 
-      accessory = new this.api.platformAccessory(strings.brand, uuid);
+      if (name) {
+        this.log.info('%s %s [%s]', strings.startup.newDevice, name, device.id);
+      } else {
+        this.log.info('%s [%s]', strings.startup.newDevice, device.id);
+      }
+
+      accessory = new this.api.platformAccessory(strings.general.brand, uuid);
       accessory.context.deviceId = device.id;
       accessory.context.deviceName = name;
 
@@ -123,12 +131,12 @@ export class FlumePlatform implements DynamicPlatformPlugin {
   }
 
   configureAccessory(accessory: PlatformAccessory): void {
-    this.log.info(strings.restoringDevice, accessory.context.deviceName ?? accessory.context.deviceId);
+    this.log.info(strings.startup.restoringDevice, accessory.context.deviceName ?? accessory.context.deviceId);
     this.accessories.set(accessory.UUID, accessory);
   }
   
   private removeAccessory(accessory: PlatformAccessory): void {
-    this.log.info(strings.removeDevice, accessory.context.deviceName ?? accessory.context.deviceId);
+    this.log.info(strings.startup.removeDevice, accessory.context.deviceName ?? accessory.context.deviceId);
     this.api.unregisterPlatformAccessories(PLUGIN_NAME, PLATFORM_ALIAS, [accessory]);
     this.accessories.delete(accessory.UUID);
   }

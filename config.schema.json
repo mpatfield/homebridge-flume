@@ -3,75 +3,70 @@
   "pluginType": "platform",
   "singular": true,
   "customUi": true,
-  "customUiPath": "./src/homebridge-ui",
+  "customUiPath": "./dist/homebridge-ui",
   "schema": {
     "type": "object",
     "required": ["username", "password", "clientId", "clientSecret", "refreshInterval", "units"],
     "properties": {
-      "name": {
-        "type": "string",
-        "title": "Plugin Name",
-        "default": "Flume"
-      },
       "username": {
         "type": "string",
-        "title": "Flume Username",
+        "title": "${config.title.username}",
         "required": true
       },
       "password": {
         "type": "string",
-        "title": "Flume Password",
+        "title": "${config.title.password}",
         "required": true
       },
       "clientId": {
         "type": "string",
-        "title": "Client ID",
+        "title": "${config.title.clientId}",
         "placeholder": "1234567890ABCD",
         "required": true
       },
       "clientSecret": {
         "type": "string",
-        "title": "Client Secret",
-        "description": "Your Flume Client ID and Client Secret can be found at https://portal.flumetech.com",
+        "title": "${config.title.clientSecret}",
+        "description": "${config.description.clientSecret}",
         "placeholder": "1234567890ABCDEFGHIJ",
         "required": true
       },
       "refreshInterval": {
         "type": "integer",
-        "title": "Refresh Interval",
-        "description": "Number of minutes between requests to Flume for leak information",
+        "title": "${config.title.refreshInterval}",
+        "description": "${config.description.refreshInterval}",
         "default": 2,
         "minimum": 1,
         "required": true
       },
       "units": {
         "type": "string",
-        "title": "Units",
-        "description": "Volume units to use for custom characteristics",
+        "title": "${config.title.units}",
+        "description": "${config.description.units}",
         "enum": ["GALLONS", "LITERS", "CUBIC_FEET", "CUBIC_METERS"],
-        "enumNames": ["Gallons", "Liters", "Cubic Feet", "Cubic Meters"],
+        "enumNames": ["${config.enumNames.gallons}", "${config.enumNames.liters}", "${config.enumNames.cubicFeet}", "${config.enumNames.cubicMeters}"],
         "default": "GALLONS",
         "required": true
       },
       "disableDeviceLogging": {
         "type": "boolean",
-        "title": "Disable Device Logging",
-        "description": "If true then accessory status changes will not be logged",
+        "title": "${config.title.disableDeviceLogging}",
+        "description": "${config.description.disableDeviceLogging}",
         "default": false,
         "required": false
       },
       "verbose": {
         "type": "boolean",
-        "title": "Verbose",
-        "description": "Enable additional debug logging",
+        "title": "${config.title.verbose}",
+        "description": "${config.description.verbose}",
         "required": false
       },
       "excludeDevices": {
         "type": "array",
-        "title": "Exclude devices",
-        "description": "List of devices to exclude from HomeKit -- look for \"Adding new device: [Device ID]\" in the logs",
+        "title": "${config.title.excludeDevices}",
+        "description": "${config.description.excludeDevices}",
         "items": {
-          "title": "Device ID",
+          "title": "${config.title.deviceId}",
           "type": "string"
         },
         "uniqueItems": true,

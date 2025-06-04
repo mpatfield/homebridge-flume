@@ -2,7 +2,7 @@ import { Characteristic, Formats, HAP, LogLevel, Perms, PlatformAccessory, Servi
 
 import { FlumePlatform } from './platform.js';
 
-import strings from '../lang/en.js';
+import { strings } from '../i18n/i18n.js';
 
 import { Device } from '../model/device.js';
 import { VolumeUnits } from '../model/types.js';
@@ -14,9 +14,9 @@ class CustomCharacteristic {
   }
 }
 
-const TODAY_USAGE = new CustomCharacteristic('f25cc272-83cb-46a7-915a-259fa17364ed', strings.todayUsage);
-const MONTH_USAGE = new CustomCharacteristic('580e224d-edf2-4c23-af79-cdbebfc509c5', strings.monthUsage);
-const LAST_MONTH_USAGE = new CustomCharacteristic('69129d54-bdb8-46a1-a93b-f7e8d16d32a8', strings.lastMonth);
+const TODAY_USAGE = new CustomCharacteristic('f25cc272-83cb-46a7-915a-259fa17364ed', strings.customChar.todayUsage);
+const MONTH_USAGE = new CustomCharacteristic('580e224d-edf2-4c23-af79-cdbebfc509c5', strings.customChar.monthUsage);
+const LAST_MONTH_USAGE = new CustomCharacteristic('69129d54-bdb8-46a1-a93b-f7e8d16d32a8', strings.customChar.lastMonth);
 
 export class FlumeAccessory {
   private readonly HAP: HAP;
@@ -51,9 +51,9 @@ export class FlumeAccessory {
     this.Service = this.HAP.Service;
 
     accessory.getService(this.Service.AccessoryInformation)!
-      .setCharacteristic(this.Characteristic.Name, name ?? strings.brand)
-      .setCharacteristic(this.Characteristic.ConfiguredName, name ?? strings.brand)
-      .setCharacteristic(this.Characteristic.Manufacturer, strings.brand)
+      .setCharacteristic(this.Characteristic.Name, name ?? strings.general.brand)
+      .setCharacteristic(this.Characteristic.ConfiguredName, name ?? strings.general.brand)
+      .setCharacteristic(this.Characteristic.Manufacturer, strings.general.brand)
       .setCharacteristic(this.Characteristic.SerialNumber, device.id)
       .setCharacteristic(this.Characteristic.Model, device.productName)
       .setCharacteristic(this.Characteristic.FirmwareRevision, getVersion());
@@ -92,21 +92,22 @@ export class FlumeAccessory {
       this.isLeakDetected = this.device.isLeakDetected;
       const value = this.isLeakDetected ? this.charLeakDetected.LEAK_DETECTED : this.charLeakDetected.LEAK_NOT_DETECTED;
       this.leakService.updateCharacteristic(this.charLeakDetected, value);
-      this.logState(this.isLeakDetected ? LogLevel.ERROR : LogLevel.INFO, this.isLeakDetected ? strings.leakDetected : strings.leakNotDetected);
+      this.logState(this.isLeakDetected ? LogLevel.ERROR : LogLevel.INFO, this.isLeakDetected ? strings.status.leakDetected : strings.status.leakNotDetected);
     }
 
     if (this.device.isBatteryLow !== this.isBatteryLow) {
       this.isBatteryLow = this.device.isBatteryLow;
       const value  = this.isBatteryLow ? this.charStatusLowBattery.BATTERY_LEVEL_LOW : this.charStatusLowBattery.BATTERY_LEVEL_NORMAL;
       this.leakService.updateCharacteristic(this.charStatusLowBattery, value);
-      this.logState(this.isBatteryLow ? LogLevel.WARN : LogLevel.INFO, this.isBatteryLow ? strings.batteryLow : strings.batteryNormal);
+      this.logState(this.isBatteryLow ? LogLevel.WARN : LogLevel.INFO, this.isBatteryLow ? strings.status.batteryLow : strings.status.batteryNormal);
     }
 
     if (this.device.isDisconnected !== this.isDisconnected) {
       this.isDisconnected = this.device.isDisconnected;
       const value = this.isDisconnected ? this.charStatusFault.GENERAL_FAULT : this.charStatusFault.NO_FAULT;
       this.leakService.updateCharacteristic(this.charStatusFault, value);
-      this.logState(this.isDisconnected ? LogLevel.WARN : LogLevel.INFO, this.isDisconnected ? strings.connectionFault : strings.connectionNormal);
+      this.logState(this.isDisconnected ? LogLevel.WARN : LogLevel.INFO,
+        this.isDisconnected ? strings.status.connectionFault : strings.status.connectionNormal);
     }
 
     this.todayUsageChar.updateValue(this.device.usageToday);
@@ -116,10 +117,10 @@ export class FlumeAccessory {
 
   private stringForUnits(): string {
     switch(this.units) {
-    case VolumeUnits.GALLONS: return strings.customCharUnitsGallons;
-    case VolumeUnits.LITERS: return strings.customCharUnitsLiters;
-    case VolumeUnits.CUBIC_FEET: return strings.customCharUnitsCubicFeet;
-    case VolumeUnits.CUBIC_METERS: return strings.customCharUnitsCubicMeters;
+    case VolumeUnits.GALLONS: return strings.config.enumNames.gallons;
+    case VolumeUnits.LITERS: return strings.config.enumNames.liters;
+    case VolumeUnits.CUBIC_FEET: return strings.config.enumNames.cubicFeet;
+    case VolumeUnits.CUBIC_METERS: return strings.config.enumNames.cubicMeters;
     }
   }
 

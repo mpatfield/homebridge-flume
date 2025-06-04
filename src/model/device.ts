@@ -1,4 +1,4 @@
-import { DeviceData, LeakData, UsageData } from './types';
+import { DeviceData, LeakData, UsageData } from './types.js';
 
 const BATTERY_LEVEL_LOW = 'low';
 

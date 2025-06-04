@@ -1,104 +1,129 @@
 <p class="text-center">
   <img
     src="https://github.com/mpatfield/homebridge-flume/blob/latest/img/banner.png?raw=true"
-    alt="homebridge-flume logo"
+    alt="homebridge-flume"
     style="width: 60%;"
   />
 </p>
 <div id="support" class="text-center" style="display: none;">
-  <p>For help and support please visit <a target="_blank" href="https://github.com/mpatfield/homebridge-flume/">GitHub</a>. We hope you find this plugin useful!</p>
+  <p i18n="support" i18n_replace="github"></p>
 </div>
 <div id="pageIntro" class="text-center" style="display: none;">
-  <p class="lead">Thank you for installing <strong>homebridge-flume</strong></p>
-  <p>
-  </br>You will need your Flume username, password, <a target="_blank" href="https://portal.flumetech.com/">client ID and secret</a></br>
-  </p>
-  </br><button type="button" class="btn btn-primary" id="introContinue">Continue &rarr;</button>
+  <p class="lead" i18n="thankYou"></p>
+  <p i18n="needed" i18n_replace="flume"></p>
+  </br><button type="button" class="btn btn-primary" id="introContinue" i18n="continue", i18n_replace="arrow"></button>
 </div>
-<div id="spinner-container">
-  <div id="spinner" class="spinner"></div>
-</div>
-<style>
 
-#spinner-container {
-  margin-top: 2rem;
-  display: none;
-  justify-content: center;
-}
-
-.spinner {
-  border: 8px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 8px solid #3498db;
-  width: 60px;
-  height: 60px;
-  -webkit-animation: spin 1s linear infinite; /* Safari */
-  animation: spin 1s linear infinite;
-}
-
-/* Safari */
-@-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-</style>
 <script>
-  ;(async () => {
 
-      const showSpinner = () => {
-        const spinnerContainer = document.getElementById('spinner-container')
-        spinnerContainer.style.display = 'flex'
+  const i18n_replacements = {
+    arrow: '&rarr;',
+    flume: '<a target="_blank" href="https://portal.flumetech.com/">Flume</a>',
+    github: '<a target="_blank" href="https://github.com/mpatfield/homebridge-flume/">GitHub</a>'
+  }
+
+  const translateHtml = (strings) => {
+    document.querySelectorAll('[i18n]').forEach(element => {
+
+      let string = strings.config[element.getAttribute('i18n')]
+
+      const token = element.getAttribute('i18n_replace')
+      if (token) {
+        string = string.replace('%s', i18n_replacements[token])
       }
 
-      const hideSpinner = () => {
-        const spinnerContainer = document.getElementById('spinner-container')
-        spinnerContainer.style.display = 'none'
-      }
+      element.innerHTML = string
+    })
+  }
 
-      const showIntro = () => {
-        const introContinue = document.getElementById('introContinue')
-        introContinue.addEventListener('click', async () => {
-          showSettings()
-        })
-        document.getElementById('pageIntro').style.display = 'block'
-        hideSpinner()
-      }
+  const translateSchema = (strings, observer) => {
 
-      const showSupport = () => {
-        document.getElementById('support').style.display = 'block'
-      }
+    let replaced = false
 
-      const showSettings = async () => {
-        document.getElementById('pageIntro').style.display = 'none'
-        showSpinner()
-        showSupport()
-        await homebridge.showSchemaForm()
-        hideSpinner()
+    const tags = ['span', 'label', 'legend', 'option', 'p']
+    const elements = Array.from(
+      window.parent.document.querySelectorAll(tags.join(','))
+    ).sort((a, b) => {
+      return tags.indexOf(a.tagName.toLowerCase()) - tags.indexOf(b.tagName.toLowerCase())
+    })
+
+    elements.forEach(element => {
+      let newHtml = element.innerHTML
+
+      newHtml = newHtml.replaceAll(
+        /\$\{config\.(title|description|enumNames)\.([^\}]+)\}/g,
+        (match, type, key) => {
+          if (strings.config[type] && strings.config[type][key]) {
+            return strings.config[type][key]
+          }
+          return match
+        }
+      )
+
+      if (element.innerHTML !== newHtml) {
+        element.innerHTML = newHtml
+        replaced = true
       }
+    })
+
+    if (replaced) observer?.disconnect()
+  }
+
+  const showIntro = (strings) => {
+
+    const introContinue = document.getElementById('introContinue')
+    introContinue.addEventListener('click', async () => {
+      showSettings(strings)
+    })
+
+    document.getElementById('pageIntro').style.display = 'block'
+
+    homebridge.hideSpinner()
+  }
+
+  const showSettings = async (strings) => {
+    homebridge.showSpinner()
+
+    document.getElementById('pageIntro').style.display = 'none'        
+    document.getElementById('support').style.display = 'block'
+
+    const observer = new window.parent.MutationObserver(() => {
+      translateSchema(strings, observer)
+    })
+
+    observer.observe(
+      window.parent.document.body,
+      { childList: true, subtree: true }
+    )
+
+    await homebridge.showSchemaForm()
+
+    homebridge.hideSpinner()
+  }
+
+  (async () => {
+
+    homebridge.showSpinner()
 
     try {
 
-      showSpinner()
-      await new Promise(r => setTimeout(r, 500))
+      const language = await homebridge.i18nCurrentLang()
+      const strings = await homebridge.request('i18n', language)
+      translateHtml(strings)
 
-      const currentConfig = await homebridge.getPluginConfig()
-
-      if (currentConfig.length) {
-        await showSettings()
+      const config = await homebridge.getPluginConfig()
+      if (config.length) {
+        await showSettings(strings)
       } else {
-        currentConfig.push({ name: 'Flume' })
-        await homebridge.updatePluginConfig(currentConfig)
-        showIntro()
+        config.push({ name: strings.brand })
+        await homebridge.updatePluginConfig(config)
+        showIntro(strings)
       }
-      
+
     } catch (err) {
-      homebridge.toast.error(err.message, 'Sorry, something went wrong. Please try again.')
-      hideSpinner()
+      homebridge.toast.error(err.message)
+      homebridge.hideSpinner()
     }
   })()
+
 </script>

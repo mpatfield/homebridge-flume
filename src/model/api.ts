@@ -5,7 +5,8 @@ import { Auth } from './auth.js';
 import { Device } from './device.js';
 import * as Types from './types.js';
 
-import strings from '../lang/en.js';
+import { strings } from '../i18n/i18n.js';
+
 import { MINUTE, SECOND } from '../tools/time.js';
 
 const URL_AUTH = 'https://api.flumetech.com/oauth/token';
@@ -129,7 +130,7 @@ export class FlumeAPI {
 
       if (!res.data || !res.data.data || !res.data.data[0]) {
         this.logHTTP(LogLevel.DEBUG, caller, JSON.stringify(res.data));
-        throw new Error(strings.noDataReceived);
+        throw new Error(strings.errors.noDataReceived);
       }
 
       const returnValue = shouldReturnArray ? res.data.data as T : res.data.data[0];
@@ -164,7 +165,7 @@ export class FlumeAPI {
       return null;
     }
     
-    this.log.warn(strings.httpRetry, RETRY_INTERVALS[this.retryIndex]);
+    this.log.warn(strings.errors.httpRetry, RETRY_INTERVALS[this.retryIndex]);
     await new Promise(resolve => setTimeout(resolve, RETRY_INTERVALS[this.retryIndex] * MINUTE));
 
     this.retryIndex += 1;
@@ -208,7 +209,7 @@ export class FlumeAPI {
   private async authRefresh(): Promise<boolean> {
 
     if (!this.auth?.refresh) {
-      this.logHTTP(LogLevel.DEBUG, this.authRefresh.name, strings.noRefreshToken);
+      this.logHTTP(LogLevel.DEBUG, this.authRefresh.name, strings.errors.noRefreshToken);
       return await this.authenticate();
     }
 
@@ -387,7 +388,7 @@ export class FlumeAPI {
 
     Types.SENSITIVE_KEYS.forEach(key => {
       const regex = new RegExp(`"${key}"\\s*:\\s*(".*?"|\\d+|true|false|null)`, 'gi');
-      message = message.replace(regex, `"${key}": "${strings.redacted}"`);
+      message = message.replace(regex, `"${key}": "${strings.general.redacted}"`);
     });
 
     this.logHTTP(LogLevel.INFO, caller, message);
