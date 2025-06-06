@@ -8,6 +8,10 @@
     "type": "object",
     "required": ["username", "password", "clientId", "clientSecret", "refreshInterval", "units"],
     "properties": {
+      "name": {
+        "type": "string",
+        "default": "Flume"
+      },
       "username": {
         "type": "string",
         "title": "${config.title.username}",
@@ -66,7 +70,6 @@
         "title": "${config.title.excludeDevices}",
         "description": "${config.description.excludeDevices}",
         "items": {
-          "title": "${config.title.deviceId}",
           "type": "string"
         },
         "uniqueItems": true,
@@ -74,5 +77,28 @@
         "required": false
       }
     }
-  }
+  },
+  "layout": [
+    {
+      "type": "fieldset",
+      "items": [
+        "username",
+        "password",
+        "clientId",
+        "clientSecret",
+        "refreshInterval",
+        "units",
+        "disableDeviceLogging",
+        "verbose",
+        {
+          "key": "excludeDevices",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "title": "${config.title.deviceId}"
+          }
+        }
+      ]
+    }
+  ]
 }
