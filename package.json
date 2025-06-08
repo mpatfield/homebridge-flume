@@ -56,17 +56,19 @@
     "axios": "^1.7.2",
     "homebridge-lib": "^7.1.4",
     "jwt-decode": "^4.0.0",
-    "lodash.merge": "^4.6.2"
+    "lodash.merge": "^4.6.2",
+    "node-persist": "^4.0.4"
   },
   "devDependencies": {
     "@types/lodash.merge": "^4.6.9",
-    "eslint": "^9.27.0",
+    "@types/node-persist": "^3.1.8",
     "esbuild": "^0.25.5",
+    "eslint": "^9.27.0",
     "homebridge": "^2.0.0-beta.0",
     "jiti": "^2.4.2",
     "rimraf": "^6.0.1",
     "ts-node": "^10.9.2",
-    "typescript-eslint": "^8.24.1" 
+    "typescript-eslint": "^8.24.1"
   },
   "license": "Apache-2.0"
 }

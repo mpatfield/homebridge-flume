@@ -51,12 +51,10 @@ export class FlumeAPI {
     private readonly clientSecret: string,
     private readonly refreshInterval: number,
     private readonly units: Types.VolumeUnits,
-    private storagePath: string,
+    private persistPath: string,
     private readonly log: Logger,
     private readonly verbose: boolean,
-  ) {
-    this.auth = Auth.load(this.storagePath, this.clientId);
-  }
+  ) {}
 
   static async connect(
     username: string,
@@ -65,11 +63,13 @@ export class FlumeAPI {
     clientSecret: string,
     refreshInterval: number,
     units: Types.VolumeUnits,
-    storagePath: string,
+    persistPath: string,
     log: Logger,
     verbose: boolean,
   ): Promise<FlumeAPI> {
-    const api = new FlumeAPI(username, password, clientId, clientSecret, refreshInterval, units, storagePath, log, verbose);
+    const api = new FlumeAPI(username, password, clientId, clientSecret, refreshInterval, units, persistPath, log, verbose);
+
+    api.auth = await Auth.load(persistPath, clientId);
 
     let shouldContinue = true;
     if (!api.auth) {
@@ -181,7 +181,7 @@ export class FlumeAPI {
     this._auth = value;
 
     if (this._auth) {
-      this._auth.save(this.storagePath, this.clientId);
+      this._auth.save(this.persistPath, this.clientId);
     }
   }
 

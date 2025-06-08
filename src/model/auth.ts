@@ -1,8 +1,8 @@
 import crypto from 'crypto';
+import storage from 'node-persist';
 
 import { JwtPayload, TokenData } from './types.js';
 
-import { safeSetItem, safeGetItem } from '../tools/storage.js';
 import { DAY, SECOND } from '../tools/time.js';
 import { jwtDecode } from 'jwt-decode';
 
@@ -40,30 +40,43 @@ export class Auth {
     return crypto.createHash('sha256').update(encryptionKey).digest();
   }
 
-  save(filePath: string, encryptionKey: string): void {
-
-    const serailzed = JSON.stringify({
-      data: this.data,
-      created: this.created,
-    });
-
-    const digest = Auth.digest(encryptionKey);
-    const iv = crypto.randomBytes(16);
-    const cipher = crypto.createCipheriv('aes-256-cbc', digest, iv);
-    const encrypted = Buffer.concat([cipher.update(serailzed, 'utf8'), cipher.final()]);
-    const final = iv.toString('hex') + ':' + encrypted.toString('hex');
-
-    safeSetItem(filePath, STORAGE_AUTH_KEY, final);
+  private static async initStorage(persistPath: string): Promise<void> {
+    await storage.init({ dir: persistPath });
   }
 
-  static load(filePath: string, encryptionKey: string): Auth | null {
-
-    const final = safeGetItem(filePath, STORAGE_AUTH_KEY);
-    if (!final) {
-      return null;
-    }
+  async save(persistPath: string, encryptionKey: string): Promise<void> {
 
     try {
+
+      await Auth.initStorage(persistPath);
+
+      const serailzed = JSON.stringify({
+        data: this.data,
+        created: this.created,
+      });
+
+      const digest = Auth.digest(encryptionKey);
+      const iv = crypto.randomBytes(16);
+      const cipher = crypto.createCipheriv('aes-256-cbc', digest, iv);
+      const encrypted = Buffer.concat([cipher.update(serailzed, 'utf8'), cipher.final()]);
+      const final = iv.toString('hex') + ':' + encrypted.toString('hex');
+
+      await storage.set(STORAGE_AUTH_KEY, final);
+    } catch (err) {
+      // Nothing
+    }
+  }
+
+  static async load(persistPath: string, encryptionKey: string): Promise<Auth | null> {
+
+    try {
+
+      await Auth.initStorage(persistPath);
+
+      const final = await storage.get(STORAGE_AUTH_KEY);
+      if (!final) {
+        return null;
+      }
 
       const digest = Auth.digest(encryptionKey);
       const [ivHex, encryptedHex] = final.split(':');

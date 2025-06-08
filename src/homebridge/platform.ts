@@ -1,5 +1,4 @@
 import { API, DynamicPlatformPlugin, Logger, PlatformAccessory, PlatformConfig } from 'homebridge';
-import path from 'path';
 
 import { FlumeAccessory } from './accessory.js';
 
@@ -9,7 +8,6 @@ import { FlumeAPI } from '../model/api.js';
 import { Device } from '../model/device.js';
 import { VolumeUnits } from '../model/types.js';
 
-import { STORAGE_FILE_NAME } from '../tools/storage.js';
 import getVersion from '../tools/version.js';
 
 export const PLATFORM_ALIAS = 'Flume';
@@ -17,7 +15,6 @@ const PLUGIN_NAME = 'homebridge-flume';
 
 export class FlumePlatform implements DynamicPlatformPlugin {
 
-  private readonly storagePath: string;
   private flumeAPI: FlumeAPI | null = null;
 
   private readonly accessories: Map<string, PlatformAccessory> = new Map();
@@ -30,8 +27,6 @@ export class FlumePlatform implements DynamicPlatformPlugin {
 
     const userLang = Intl.DateTimeFormat().resolvedOptions().locale.split('-')[0];
     setLanguage(userLang);
-
-    this.storagePath = path.join(api.user.storagePath(), STORAGE_FILE_NAME);
 
     this.log.info(
       'v%s | System %s | Node %s | HB v%s | HAPNodeJS v%s',
@@ -66,7 +61,7 @@ export class FlumePlatform implements DynamicPlatformPlugin {
       this.config.clientSecret,
       this.config.refreshInterval,
       this.config.units ?? VolumeUnits.GALLONS,
-      this.storagePath,
+      this.api.user.persistPath(),
       this.log,
       this.config.verbose,
     );
