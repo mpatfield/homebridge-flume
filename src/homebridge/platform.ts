@@ -1,6 +1,7 @@
 import { API, DynamicPlatformPlugin, Logger, PlatformAccessory, PlatformConfig } from 'homebridge';
 
 import { FlumeAccessory } from './accessory.js';
+import { PLATFORM_ALIAS, PLUGIN_NAME } from './settings.js';
 
 import { setLanguage, strings } from '../i18n/i18n.js';
 
@@ -9,9 +10,6 @@ import { Device } from '../model/device.js';
 import { VolumeUnits } from '../model/types.js';
 
 import getVersion from '../tools/version.js';
-
-export const PLATFORM_ALIAS = 'Flume';
-const PLUGIN_NAME = 'homebridge-flume';
 
 export class FlumePlatform implements DynamicPlatformPlugin {
 
