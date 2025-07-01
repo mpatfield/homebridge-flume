@@ -96,7 +96,7 @@ const showIntro = (strings: Translation) => {
     if (config.length) {
       await showSettings(strings);
     } else {
-      config.push({ name: strings.brand });
+      config.push({ name: strings.general.brand });
       await homebridge.updatePluginConfig(config);
       showIntro(strings);
     }
