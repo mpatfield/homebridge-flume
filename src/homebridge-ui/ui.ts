@@ -1,12 +1,13 @@
 import { IHomebridgePluginUi } from '@homebridge/plugin-ui-utils/ui.interface';
 import { Translation } from '../i18n/i18n.js';
+import { PROJECT_HOMEPAGE } from '../homebridge/settings.js';
 
 declare const homebridge: IHomebridgePluginUi;
 
 const i18n_replacements = {
   arrow: '&rarr;',
   flume: '<a target="_blank" href="https://portal.flumetech.com/">Flume</a>',
-  github: '<a target="_blank" href="https://github.com/mpatfield/homebridge-flume/">GitHub</a>',
+  github: `<a target="_blank" href="${PROJECT_HOMEPAGE}">GitHub</a>`,
 };
 
 const translateHtml = (strings: Translation) => {

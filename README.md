@@ -64,10 +64,12 @@ Using the Homebridge Config UI is the easiest way to set up this plugin. However
 
 ## Credits
 
-@weallknowwhoisatfaulthere for earlier work done [homebridge-flume-water-sensor](https://www.npmjs.com/package/homebridge-flume-water-sensor)
+[@LexifOder](https://github.com/sponsors/LexifOder) for German translations
+
+[Keryan Belahcene](https://www.instagram.com/keryan.me) for creating the [Flume](https://github.com/homebridge-plugins/homebridge-flume) header logo
 
 [@bwp91](https://github.com/sponsors/bwp91) for creating and maintaining this plugin for years despite not even owning a Flume device
 
-[Keryan Belahcene](https://www.instagram.com/keryan.me) for creating the [Flume](https://github.com/homebridge-plugins/homebridge-flume) header logo
+@weallknowwhoisatfaulthere for earlier work done [homebridge-flume-water-sensor](https://www.npmjs.com/package/homebridge-flume-water-sensor)
 
 And to the amazing creators/contributors of [Homebridge](https://homebridge.io) who made this plugin possible!

@@ -10,7 +10,7 @@ const en = {
     description: {
       clientSecret: 'Your Flume Client ID and Client Secret can be found at https://portal.flumetech.com',
       disableDeviceLogging: 'If true, then accessory status changes will not be logged',
-      excludeDevices: 'List of devices to exclude from HomeKit -- look for "Adding new device: [Device ID]" in the logs',
+      excludeDevices: 'Look for "Adding new device: [Device ID]" in the logs',
       refreshInterval: 'Number of minutes between requests to Flume for leak information',
       units: 'Volume units to use for custom characteristics',
       verbose: 'Enable additional debug logging',
@@ -44,7 +44,7 @@ const en = {
   },
 
   errors: {
-    badConfig: 'One or more required variables are missing from the config. Please check the documentation. https://github.com/mpatfield/homebridge-flume',
+    badConfig: 'One or more required variables are missing from the config. Please check the documentation.',
     httpRetry: 'Request failed. Retrying in %s minutes…', // number
     noDataReceived: 'No data received from http request',
     noDevices: 'No devices were found in your account',

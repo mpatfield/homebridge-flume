@@ -1,7 +1,7 @@
 import { API, DynamicPlatformPlugin, Logger, PlatformAccessory, PlatformConfig } from 'homebridge';
 
 import { FlumeAccessory } from './accessory.js';
-import { PLATFORM_ALIAS, PLUGIN_NAME } from './settings.js';
+import { PLATFORM_ALIAS, PLUGIN_NAME, PROJECT_HOMEPAGE } from './settings.js';
 
 import { setLanguage, strings } from '../i18n/i18n.js';
 
@@ -27,12 +27,13 @@ export class FlumePlatform implements DynamicPlatformPlugin {
     setLanguage(userLang);
 
     this.log.info(
-      'v%s | System %s | Node %s | HB v%s | HAPNodeJS v%s',
+      'v%s | %s | Node %s | HB v%s | HAP v%s | Lang %s',
       getVersion(),
       process.platform,
       process.version,
       api.serverVersion,
       api.hap.HAPLibraryVersion(),
+      userLang,
     );
 
     this.api.on('didFinishLaunching', () => this.didFinishLaunching());
@@ -48,7 +49,7 @@ export class FlumePlatform implements DynamicPlatformPlugin {
       !this.config.clientSecret ||
       !this.config.refreshInterval
     ) {
-      this.log.error(strings.errors.badConfig);
+      this.log.error(strings.errors.badConfig, PROJECT_HOMEPAGE);
       return;
     }
 
