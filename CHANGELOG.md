@@ -6,6 +6,19 @@ Would you like to see Homebridge Flume in your language? Please consider [gettin
 
 All notable changes to homebridge-flume will be documented in this file.
 
+## 3.1.3 (2025-07-14)
+
+### Added
+- Deutsche Übersetzungen – Danke, [@LexifOder](https://github.com/sponsors/LexifOder)!
+
+### Fixed
+- Config UI in dark mode
+
+### Changed
+- Use unread notifications as indication of leaks, low battery, or connection issues
+- Updated dependencies
+- Force cache miss for ui.js in config UI for each version update
+
 ## 3.1.2 (2025-06-22)
 
 ### Changed
