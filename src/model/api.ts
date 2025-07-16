@@ -133,7 +133,7 @@ export class FlumeAPI {
         res = await axios.get(url, config);
       }
 
-      if (!res.data || !res.data.data || !res.data.data[0]) {
+      if (!res.data || !res.data.data || (!shouldReturnArray && !res.data.data[0])) {
         this.logIfVerbose(caller, JSON.stringify(res.data));
         throw new Error(strings.errors.noDataReceived);
       }
