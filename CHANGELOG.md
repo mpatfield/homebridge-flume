@@ -2,10 +2,16 @@
 
 All notable changes to homebridge-flume will be documented in this file.
 
-# 3.1.7 (2025-08-11)
+## 3.1.8 (XXXX-XX-XX)
 
 ### HELP NEEDED! (no coding experience required)
 Would you like to see Homebridge Flume in your language? Please consider [getting involved](https://github.com/mpatfield/homebridge-flume/issues/107).
+
+### Changed
+- Use location name when logging state changes
+- Updated dependencies
+
+## 3.1.7 (2025-08-11)
 
 ### Fixed
 - Broken header image in config UI
@@ -13,14 +19,14 @@ Would you like to see Homebridge Flume in your language? Please consider [gettin
 ### Changed
 - Updated dependencies
 
-# 3.1.6 (2025-07-29)
+## 3.1.6 (2025-07-29)
 
 ### Changed
 - Behavior of `useNotifications` option has changed slightly to use only notifications as indications of leaks 
   - Setting name has changed to "Use Unread Usage Notifications" in the config UI
 - Updated dependencies
 
-# 3.1.5 (2025-07-24)
+## 3.1.5 (2025-07-24)
 
 ### Fixed
 - Try full authentication when refresh fails ([#128](https://github.com/mpatfield/homebridge-flume/issues/128))
@@ -32,7 +38,7 @@ Would you like to see Homebridge Flume in your language? Please consider [gettin
 ### Added
 - Added `useNotifications` config option to include custom usage alerts in leak detection
 
-# 3.1.4 (2025-07-16)
+## 3.1.4 (2025-07-16)
 
 ### Fixed
 - Incorrectly logging an error when there are no notifications

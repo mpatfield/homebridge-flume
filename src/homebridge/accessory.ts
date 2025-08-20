@@ -41,7 +41,7 @@ export class FlumeAccessory {
     private readonly platform: FlumePlatform, 
     private readonly accessory: PlatformAccessory,
     private readonly device: Device,
-    name: string | null | undefined,
+    private readonly name: string | null | undefined,
     private readonly units: VolumeUnits,
     private readonly disableLogging: boolean,
   ) {
@@ -164,8 +164,15 @@ export class FlumeAccessory {
   }
 
   private logState(level: LogLevel, message: string) {
-    if (!this.disableLogging) {
-      this.platform.log.log(level, '[%s] %s', this.device.id, message);
+
+    if (this.disableLogging) {
+      return;
+    }
+
+    if (this.name) {
+      this.platform.log.log(level, '[%s] %s', this.name, message);
+    } else {
+      this.platform.log.log(level, message);
     }
   }
 }
