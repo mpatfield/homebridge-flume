@@ -10,7 +10,7 @@ const i18n_replacements = {
   github: `<a target="_blank" href="${PROJECT_HOMEPAGE}">GitHub</a>`,
 };
 
-const translateHtml = (strings: Translation) => {
+function translateHtml(strings: Translation) {
   document.querySelectorAll('[i18n]').forEach(element => {
 
     const key = element.getAttribute('i18n') as keyof typeof strings.config;
@@ -24,7 +24,7 @@ const translateHtml = (strings: Translation) => {
   });
 };
 
-const translateSchema = (strings: Translation, observer?: MutationObserver) => {
+function translateSchema(strings: Translation, observer?: MutationObserver) {
   let replaced = false;
   const tags = ['span', 'label', 'legend', 'option', 'p'];
   const elements = Array.from(
@@ -59,8 +59,7 @@ const translateSchema = (strings: Translation, observer?: MutationObserver) => {
   }
 };
 
-const showSettings = async (strings: Translation) => {
-  homebridge.showSpinner();
+function showSettings(strings: Translation) {
   document.getElementById('pageIntro')!.style.display = 'none';
   document.getElementById('support')!.style.display = 'block';
 
@@ -73,11 +72,11 @@ const showSettings = async (strings: Translation) => {
     { childList: true, subtree: true },
   );
 
-  await homebridge.showSchemaForm();
+  homebridge.showSchemaForm();
   homebridge.hideSpinner();
 };
 
-const showIntro = (strings: Translation) => {
+function showIntro(strings: Translation) {
   const introContinue = document.getElementById('introContinue') as HTMLButtonElement;
   introContinue.addEventListener('click', async () => {
     showSettings(strings);
@@ -86,23 +85,20 @@ const showIntro = (strings: Translation) => {
   homebridge.hideSpinner();
 };
 
-(async () => {
+(() => {
   homebridge.showSpinner();
-  try {
-    const language = await homebridge.i18nCurrentLang();
-    const strings = await homebridge.request('i18n', language);
-    translateHtml(strings);
+})();
 
-    const config = await homebridge.getPluginConfig();
-    if (config.length) {
-      await showSettings(strings);
-    } else {
-      config.push({ name: strings.general.brand });
-      await homebridge.updatePluginConfig(config);
-      showIntro(strings);
-    }
-  } catch (err) {
-    homebridge.toast.error((err as Error).message);
-    homebridge.hideSpinner();
+(async () => {
+  const language = await homebridge.i18nCurrentLang();
+  const strings = await homebridge.request('i18n', language);
+  translateHtml(strings);
+
+  const config = await homebridge.getPluginConfig();
+  if (config.length) {
+    showSettings(strings);
+  } else {
+    await homebridge.updatePluginConfig([{ name: strings.general.brand }]);
+    showIntro(strings);
   }
 })();
