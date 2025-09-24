@@ -2,14 +2,14 @@
 
 All notable changes to homebridge-flume will be documented in this file.
 
-## 3.1.8 (XXXX-XX-XX)
-
-### HELP NEEDED! (no coding experience required)
-Would you like to see Homebridge Flume in your language? Please consider [getting involved](https://github.com/mpatfield/homebridge-flume/issues/107).
+## 3.1.8 (2025-09-24)
 
 ### Changed
 - Use location name when logging state changes
 - Updated dependencies
+
+### Notes
+Would you like to see Homebridge Flume in your language? Please consider [getting involved](https://github.com/mpatfield/homebridge-flume/issues/107). No coding experience required!
 
 ## 3.1.7 (2025-08-11)
 

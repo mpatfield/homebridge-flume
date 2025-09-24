@@ -2,7 +2,7 @@
   "name": "homebridge-flume",
   "alias": "Flume",
   "displayName": "Flume",
-  "version": "3.1.7",
+  "version": "3.1.8",
   "author": {
     "name": "mpatfield"
   },
