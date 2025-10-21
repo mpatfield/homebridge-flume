@@ -2,6 +2,14 @@
 
 All notable changes to homebridge-flume will be documented in this file.
 
+## 3.1.9 (2025-10-21)
+
+### Changed
+- Updated dependencies
+
+### Notes
+Would you like to see Homebridge Flume in your language? Please consider [getting involved](https://github.com/mpatfield/homebridge-flume/issues/107). No coding experience required!
+
 ## 3.1.8 (2025-09-24)
 
 ### Changed
