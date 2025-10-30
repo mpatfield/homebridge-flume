@@ -2,13 +2,19 @@
 
 All notable changes to homebridge-flume will be documented in this file.
 
-## 3.1.9 (2025-10-21)
+## 3.1.10 (2025-10-30)
 
 ### Changed
+- ⚠️ Dropped [official support](https://github.com/homebridge/homebridge/wiki/How-To-Update-Node.js) for Node.js v18 and added Node.js v24
 - Updated dependencies
 
 ### Notes
 Would you like to see Homebridge Flume in your language? Please consider [getting involved](https://github.com/mpatfield/homebridge-flume/issues/107). No coding experience required!
+
+## 3.1.9 (2025-10-21)
+
+### Changed
+- Updated dependencies
 
 ## 3.1.8 (2025-09-24)
 
