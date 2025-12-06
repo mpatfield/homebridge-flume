@@ -1,14 +1,17 @@
 import de from './de.js';
 import en from './en.js';
+import es from './es.js';
 
 export enum Language {
   DE = 'de',
   EN = 'en',
+  ES = 'es',
 }
 
 const Translations: Record<Language, Translation> = {
   [Language.DE]: de,
   [Language.EN]: en,
+  [Language.ES]: es,
 };
 
 export type Translation = typeof en;
@@ -28,6 +31,9 @@ export function setLanguage(i18nLang: string) {
     break;
   case Language.EN:
     language = Language.EN;
+    break;
+  case Language.ES:
+    language = Language.ES;
     break;
   }
 

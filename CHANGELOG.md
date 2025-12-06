@@ -2,13 +2,21 @@
 
 All notable changes to homebridge-flume will be documented in this file.
 
-## 3.1.11 (2025-11-14)
+## 3.1.12 (2025-12-06)
+
+### Added
+- Traducciones al español. ¡Gracias, [@dcompane](https://github.com/sponsors/dcompane)!
 
 ### Changed
 - Updated dependencies
 
 ### Notes
 Would you like to see Homebridge Flume in your language? Please consider [getting involved](https://github.com/mpatfield/homebridge-flume/issues/107). No coding experience required!
+
+## 3.1.11 (2025-11-14)
+
+### Changed
+- Updated dependencies
 
 ## 3.1.10 (2025-10-30)
 

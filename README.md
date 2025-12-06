@@ -68,6 +68,8 @@ Using the Homebridge Config UI is the easiest way to set up this plugin. However
 
 [@LexifOder](https://github.com/sponsors/LexifOder) for German translations
 
+[@dcompane](https://github.com/sponsors/dcompane) for Spanish translations
+
 [Keryan Belahcene](https://www.instagram.com/keryan.me) for creating the [Flume](https://github.com/homebridge-plugins/homebridge-flume) header logo
 
 [@bwp91](https://github.com/sponsors/bwp91) for creating and maintaining this plugin for years despite not even owning a Flume device

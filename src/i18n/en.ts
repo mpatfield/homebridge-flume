@@ -5,7 +5,7 @@ const en = {
     continue: 'Continue %s', // (arrow emoji) →
     needed: 'You will need your username, password, and Client ID/Secret from %s', // url
     support: 'For help and support please visit %s', // url
-    thankYou: 'Thank you for installing homebridge-flume',
+    thankYou: 'Thank you for installing Homebridge Flume',
 
     description: {
       clientSecret: 'Your Flume Client ID and Client Secret can be found at https://portal.flumetech.com',
