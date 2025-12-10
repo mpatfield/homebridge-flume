@@ -9,7 +9,7 @@
 Homebridge plugin to integrate Flume devices into Apple HomeKit
 
 [![verified-by-homebridge](https://img.shields.io/badge/homebridge-verified-blueviolet?color=%23491F59&style=flat)](https://github.com/homebridge/homebridge/wiki/Verified-Plugins)
-[![Discord](https://img.shields.io/discord/432663330281226270?color=728ED5&logo=discord&label=discord)](https://discord.com/channels/432663330281226270/1406799028565311518)\
+[![Discord](https://img.shields.io/discord/432663330281226270?color=728ED5&logo=discord&label=discord)](https://discord.gg/pu6YGgTJYp)\
 [![npm](https://img.shields.io/npm/dw/homebridge-flume)](https://www.npmjs.com/package/homebridge-flume)
 [![npm](https://img.shields.io/npm/dt/homebridge-flume)](https://www.npmjs.com/package/homebridge-flume)
 
