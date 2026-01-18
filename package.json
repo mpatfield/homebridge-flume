@@ -2,7 +2,7 @@
   "name": "homebridge-flume",
   "alias": "Flume",
   "displayName": "Flume",
-  "version": "3.1.12",
+  "version": "3.1.13-beta.0",
   "author": {
     "name": "mpatfield"
   },
@@ -31,7 +31,7 @@
   ],
   "scripts": {
     "build": "rimraf ./dist && tsc && npm run build:html && npm run build:ui",
-    "build:html": "node --loader ts-node/esm ./scripts/build-html.ts",
+    "build:html": "node --import tsx ./scripts/build-html.ts",
     "build:ui": "esbuild src/homebridge-ui/ui.ts --bundle --outfile=dist/homebridge-ui/public/ui.js --minify",
     "lint": "eslint . --max-warnings=0",
     "prepublishOnly": "npm run lint && npm run build"
@@ -67,7 +67,7 @@
     "homebridge": "^2.0.0-beta.0",
     "jiti": "^2.4.2",
     "rimraf": "^6.0.1",
-    "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
     "typescript-eslint": "^8.24.1"
   },
   "license": "Apache-2.0"
