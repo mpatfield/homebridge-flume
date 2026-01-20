@@ -16,7 +16,7 @@ function translateHtml(strings: Translation) {
     const key = element.getAttribute('i18n') as keyof typeof strings.config;
     let string = strings.config[key] as string;
 
-    const token = element.getAttribute('i18n_replace');
+    const token = element.getAttribute('i18n_replace') as keyof typeof i18n_replacements;
     if (token) {
       string = string.replace('%s', i18n_replacements[token]);
     }
@@ -24,8 +24,7 @@ function translateHtml(strings: Translation) {
   });
 };
 
-function translateSchema(strings: Translation, observer?: MutationObserver) {
-  let replaced = false;
+function translateSchema(strings: Translation) {
   const tags = ['span', 'label', 'legend', 'option', 'p'];
   const elements = Array.from(
     window.parent.document.querySelectorAll(tags.join(',')),
@@ -33,11 +32,15 @@ function translateSchema(strings: Translation, observer?: MutationObserver) {
     return tags.indexOf(a.tagName.toLowerCase()) - tags.indexOf(b.tagName.toLowerCase());
   });
 
+  const regex = /\$\{config\.(title|description|enumNames)\.([^}]+)\}/g;
+
   elements.forEach(element => {
-    let newHtml = element.innerHTML;
-    newHtml = newHtml.replaceAll(
-      /\$\{config\.(title|description|enumNames)\.([^}]+)\}/g,
-      (match, type: keyof typeof strings.config, key) => {
+    const walker = window.parent.document.createTreeWalker(element, NodeFilter.SHOW_TEXT, null);
+
+    while (walker.nextNode()) {
+      const textNode = walker.currentNode as Text;
+      const original = textNode.nodeValue || '';
+      const replaced = original.replace(regex, (match, type: keyof typeof strings.config, key) => {
         if (
           strings.config[type] &&
           typeof strings.config[type] === 'object' &&
@@ -46,25 +49,21 @@ function translateSchema(strings: Translation, observer?: MutationObserver) {
           return (strings.config[type] as Record<string, string>)[key];
         }
         return match;
-      },
-    );
-    if (element.innerHTML !== newHtml) {
-      element.innerHTML = newHtml;
-      replaced = true;
+      });
+
+      if (original !== replaced) {
+        textNode.nodeValue = replaced;
+      }
     }
   });
-
-  if (replaced) {
-    observer?.disconnect();
-  }
-};
+}
 
 function showSettings(strings: Translation) {
   document.getElementById('pageIntro')!.style.display = 'none';
   document.getElementById('support')!.style.display = 'block';
 
   const observer = new MutationObserver(() => {
-    translateSchema(strings, observer);
+    translateSchema(strings);
   });
 
   observer.observe(
