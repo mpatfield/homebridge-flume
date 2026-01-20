@@ -2,11 +2,10 @@
 
 All notable changes to homebridge-flume will be documented in this file.
 
-## 3.1.13-beta.1 (2026-01-19)
+## 3.1.13 (2026-01-20)
 
 ### Fixed
 - Checkboxes in config UI not reflecting correct state in ([#223](https://github.com/mpatfield/homebridge-flume/issues/223))
-
 
 ### Changed
 - Updated dependencies
