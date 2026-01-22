@@ -70,7 +70,6 @@ const overrides = {
     welcome: [
       'Por favor, ★ este plugin en GitHub si te resulta útil: https://github.com/mpatfield/homebridge-flume',
       '¿Te gustaría patrocinar este plugin? https://github.com/sponsors/mpatfield',
-      'Por favor, califícanos en HOOBS: https://plugins.hoobs.org/plugin/homebridge-flume',
       '¿Quieres ver este plugin en tu idioma? Visita https://github.com/mpatfield/homebridge-flume/issues/107',
     ],
   },
