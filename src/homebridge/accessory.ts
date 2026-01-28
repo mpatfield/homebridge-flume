@@ -41,7 +41,7 @@ export class FlumeAccessory {
     private readonly platform: FlumePlatform, 
     private readonly accessory: PlatformAccessory,
     private readonly device: Device,
-    private readonly name: string | null | undefined,
+    private readonly name: string,
     private readonly units: VolumeUnits,
     private readonly disableLogging: boolean,
   ) {
@@ -51,8 +51,8 @@ export class FlumeAccessory {
     this.Service = this.HAP.Service;
 
     accessory.getService(this.Service.AccessoryInformation)!
-      .setCharacteristic(this.Characteristic.Name, name ?? strings.general.brand)
-      .setCharacteristic(this.Characteristic.ConfiguredName, name ?? strings.general.brand)
+      .setCharacteristic(this.Characteristic.Name, name)
+      .setCharacteristic(this.Characteristic.ConfiguredName, name)
       .setCharacteristic(this.Characteristic.Manufacturer, strings.general.brand)
       .setCharacteristic(this.Characteristic.SerialNumber, device.id)
       .setCharacteristic(this.Characteristic.Model, device.productName)
