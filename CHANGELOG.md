@@ -2,7 +2,7 @@
 
 All notable changes to homebridge-flume will be documented in this file.
 
-## 3.1.14-beta.0 (2026-01-27)
+## 3.1.14-beta.1 (2026-01-27)
 
 ### Changed
 - Updated dependencies
