@@ -90,23 +90,20 @@ export class FlumePlatform implements DynamicPlatformPlugin {
 
   private initializeAccessory(device: Device): void {
 
-    const uuid = this.api.hap.uuid.generate(device.id);
     const name = this.flumeAPI?.locationNames.get(device.locationId) ?? strings.general.brand;
 
-    let accessory = this.accessories.get(uuid);
+    let accessory = this.accessories.get(device.id);
     if (!accessory) {
 
-      if (name) {
-        this.log.info('%s %s [%s]', strings.startup.newDevice, name, device.id);
-      } else {
-        this.log.info('%s [%s]', strings.startup.newDevice, device.id);
-      }
+      this.log.info('%s %s [%s]', strings.startup.newDevice, name, device.id);
 
-      accessory = new this.api.platformAccessory(strings.general.brand, uuid);
+      const uuid = this.api.hap.uuid.generate(device.id);
+
+      accessory = new this.api.platformAccessory(name, uuid);
       accessory.context.deviceId = device.id;
 
       this.api.registerPlatformAccessories(PLUGIN_NAME, PLATFORM_ALIAS, [accessory]);
-      this.accessories.set(uuid, accessory);
+      this.accessories.set(device.id, accessory);
     }
 
     if (name !== accessory.displayName) {
@@ -119,12 +116,12 @@ export class FlumePlatform implements DynamicPlatformPlugin {
 
   configureAccessory(accessory: PlatformAccessory): void {
     this.log.info(strings.startup.restoringDevice, accessory.displayName);
-    this.accessories.set(accessory.UUID, accessory);
+    this.accessories.set(accessory.context.deviceId, accessory);
   }
   
   private removeAccessory(accessory: PlatformAccessory): void {
     this.log.info(strings.startup.removeDevice, accessory.displayName);
     this.api.unregisterPlatformAccessories(PLUGIN_NAME, PLATFORM_ALIAS, [accessory]);
-    this.accessories.delete(accessory.UUID);
+    this.accessories.delete(accessory.context.deviceId);
   }
 }
