@@ -30,8 +30,9 @@
     "water sensor"
   ],
   "scripts": {
-    "build": "rimraf ./dist && tsc && npm run build:html && npm run build:ui",
+    "build": "rimraf ./dist && tsc && npm run build:html && npm run build:schemas && npm run build:ui",
     "build:html": "node --import tsx ./scripts/build-html.ts",
+    "build:schemas": "node --import tsx ./scripts/build-schemas.ts",
     "build:ui": "esbuild src/homebridge-ui/ui.ts --bundle --outfile=dist/homebridge-ui/public/ui.js --minify",
     "lint": "eslint . --max-warnings=0",
     "prepublishOnly": "npm run lint && npm run build"
@@ -69,6 +70,9 @@
     "rimraf": "^6.0.1",
     "tsx": "^4.21.0",
     "typescript-eslint": "^8.24.1"
+  },
+  "directories": {
+    "schemas": "schemas/"
   },
   "license": "Apache-2.0"
 }

@@ -2,13 +2,18 @@
 
 All notable changes to homebridge-flume will be documented in this file.
 
+## 3.1.15-beta. (2026-??-??)
+
+### Changed
+- Config UI schemas are built rather than being translated at run-time ([open a ticket](https://github.com/mpatfield/homebridge-flume/issues/new/choose) if you have issues)
+
+### Notes
+Would you like to see Homebridge Flume in your language? Please consider [getting involved](https://github.com/mpatfield/homebridge-flume/issues/107). No coding experience required!
+
 ## 3.1.14 (2026-02-04)
 
 ### Changed
 - Updated dependencies
-
-### Notes
-Would you like to see Homebridge Flume in your language? Please consider [getting involved](https://github.com/mpatfield/homebridge-flume/issues/107). No coding experience required!
 
 ## 3.1.13 (2026-01-20)
 

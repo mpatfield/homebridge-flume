@@ -24,61 +24,18 @@ function translateHtml(strings: Translation) {
   });
 };
 
-function translateSchema(strings: Translation) {
-  const tags = ['span', 'label', 'legend', 'option', 'p'];
-  const elements = Array.from(
-    window.parent.document.querySelectorAll(tags.join(',')),
-  ).sort((a, b) => {
-    return tags.indexOf(a.tagName.toLowerCase()) - tags.indexOf(b.tagName.toLowerCase());
-  });
-
-  const regex = /\$\{config\.(title|description|enumNames)\.([^}]+)\}/g;
-
-  elements.forEach(element => {
-    const walker = window.parent.document.createTreeWalker(element, NodeFilter.SHOW_TEXT, null);
-
-    while (walker.nextNode()) {
-      const textNode = walker.currentNode as Text;
-      const original = textNode.nodeValue || '';
-      const replaced = original.replace(regex, (match, type: keyof typeof strings.config, key) => {
-        if (
-          strings.config[type] &&
-          typeof strings.config[type] === 'object' &&
-          key in (strings.config[type] as Record<string, string>)
-        ) {
-          return (strings.config[type] as Record<string, string>)[key];
-        }
-        return match;
-      });
-
-      if (original !== replaced) {
-        textNode.nodeValue = replaced;
-      }
-    }
-  });
-}
-
-function showSettings(strings: Translation) {
+function showSettings() {
   document.getElementById('pageIntro')!.style.display = 'none';
   document.getElementById('support')!.style.display = 'block';
-
-  const observer = new MutationObserver(() => {
-    translateSchema(strings);
-  });
-
-  observer.observe(
-    window.parent.document.body,
-    { childList: true, subtree: true },
-  );
 
   homebridge.showSchemaForm();
   homebridge.hideSpinner();
 };
 
-function showIntro(strings: Translation) {
+function showIntro() {
   const introContinue = document.getElementById('introContinue') as HTMLButtonElement;
   introContinue.addEventListener('click', async () => {
-    showSettings(strings);
+    showSettings();
   });
   document.getElementById('pageIntro')!.style.display = 'block';
   homebridge.hideSpinner();
@@ -95,9 +52,9 @@ function showIntro(strings: Translation) {
 
   const config = await homebridge.getPluginConfig();
   if (config.length) {
-    showSettings(strings);
+    showSettings();
   } else {
     await homebridge.updatePluginConfig([{ name: strings.general.brand }]);
-    showIntro(strings);
+    showIntro();
   }
 })();
