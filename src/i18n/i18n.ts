@@ -1,3 +1,6 @@
+import { readFileSync } from 'fs';
+import merge from 'lodash.merge';
+
 import de from './de.js';
 import en from './en.js';
 import es from './es.js';
@@ -8,48 +11,49 @@ export enum Language {
   ES = 'es',
 }
 
-const Translations: Record<Language, Translation> = {
+const Translations = {
   [Language.DE]: de,
   [Language.EN]: en,
   [Language.ES]: es,
 };
 
-export type Translation = typeof en;
-
-let currentLanguage: Language = Language.EN;
+let currentLanguage = Language.EN;
 
 export function getLanguage() {
   return currentLanguage;
 }
 
-export function setLanguage(i18nLang: string) {
+export function setLanguage(configPath: string) {
 
-  let language = Language.EN;
-  switch(i18nLang) {
-  case Language.DE:
-    language = Language.DE;
-    break;
-  case Language.EN:
-    language = Language.EN;
-    break;
-  case Language.ES:
-    language = Language.ES;
-    break;
+  let isoLang: string | undefined;
+  try {
+    const systemConfig = readFileSync(configPath, { encoding: 'utf8' });
+    isoLang = JSON.parse(systemConfig).platforms.filter( (c: Record<string, unknown>) => c.platform === 'config')[0].lang;
+  } catch {
+    // nothing
   }
 
-  currentLanguage = Translations[language] ? language : Language.EN;
+  if (isoLang === undefined || isoLang.trim().length === 0 || isoLang === 'auto') {
+    isoLang = Intl.DateTimeFormat().resolvedOptions().locale.split('-')[0];
+  }
+
+  currentLanguage = isoLang in Translations ? isoLang as Language : Language.EN;
+}
+
+// TODO remove export when possible
+export type Translation = typeof en;
+
+export function getTranslation(language: Language): Record<string, string | object> {
+  return Translations[language] ?? {};
 }
 
 export function getStrings(language: Language): Translation {
-  return Translations[language] ?? Translations[Language.EN];
+  return merge({}, en, getTranslation(language));
 }
 
 const translations = new Proxy({} as Translation, {
-  get(_target, prop: string) {
-    return (
-      Translations[currentLanguage][prop as keyof Translation] ??
-      Translations[Language.EN][prop as keyof Translation]
-    );
+  get(_target, prop: keyof Translation) {
+    return getTranslation(currentLanguage)[prop] ?? en[prop];
   },
 });
 

@@ -1,8 +1,4 @@
-import merge from 'lodash.merge';
-
-import en from './en.js';
-
-const overrides = {
+const es = {
 
   config: {
 
@@ -83,7 +79,5 @@ const overrides = {
     leakNotDetected: 'No se detectaron fugas',
   },
 };
-
-const es = merge({}, en, overrides);
 
 export default es;

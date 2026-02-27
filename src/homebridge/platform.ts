@@ -23,17 +23,15 @@ export class FlumePlatform implements DynamicPlatformPlugin {
     readonly api: API,
   ) {
 
-    const userLang = Intl.DateTimeFormat().resolvedOptions().locale.split('-')[0];
-    setLanguage(userLang);
+    setLanguage(api.user.configPath());
 
     this.log.info(
-      'v%s | %s | Node %s | HB v%s | HAP v%s | Lang %s',
+      'v%s | %s | Node %s | HB v%s | HAP v%s',
       getVersion(),
       process.platform,
       process.version,
       api.serverVersion,
       api.hap.HAPLibraryVersion(),
-      userLang,
     );
 
     this.api.on('didFinishLaunching', () => this.didFinishLaunching());
