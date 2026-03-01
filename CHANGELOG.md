@@ -6,6 +6,7 @@ All notable changes to homebridge-flume will be documented in this file.
 
 ### Changed
 - Reworked translation system for easier maintenance — please [open a ticket](https://github.com/mpatfield/homebridge-flume/issues/new/choose) if you have issues
+- Updated depdendencies
 
 ### Notes
 Would you like to see Homebridge Flume in your language? Please consider [getting involved](https://github.com/mpatfield/homebridge-flume/issues/107). No coding experience required!
