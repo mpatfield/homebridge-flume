@@ -66,7 +66,6 @@ const es = {
     welcome: [
       'Por favor, ★ este plugin en GitHub si te resulta útil: https://github.com/mpatfield/homebridge-flume',
       '¿Te gustaría patrocinar este plugin? https://github.com/sponsors/mpatfield',
-      '¿Quieres ver este plugin en tu idioma? Visita https://github.com/mpatfield/homebridge-flume/issues/107',
     ],
   },
   

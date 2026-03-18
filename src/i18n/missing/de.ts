@@ -10,12 +10,7 @@ const de = {
       useNotifications: 'Use Unread Usage Notifications',
     },
   },
-
-  startup: {
-    welcome: [
-      'Want to see this plugin in your own language? Please visit https://github.com/mpatfield/homebridge-flume/issues/107',
-    ],
-  },
+  
 
 };
 
