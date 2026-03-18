@@ -1,12 +1,8 @@
 const es = {
 
   config: {
-
     continue: 'Continuar %s',
-    needed: 'Necesitarás tu nombre de usuario, contraseña y el ID/secreto de cliente de %s',
-    support: 'Para ayuda y soporte, visita %s',
-    thankYou: 'Gracias por instalar Homebridge Flume',
-	
+
     description: {
       clientSecret: 'Puedes encontrar tu identificacion y secreto de cliente de Flume en https://portal.flumetech.com',
       disableDeviceLogging: 'Si es verdadero, los cambios de estado del accesorio no se registrarán',
@@ -16,13 +12,16 @@ const es = {
       useNotifications: 'Si es verdadero, una alerta de uso no leída se considerará una fuga',
       verbose: 'Habilitar registro de depuración adicional',
     },
-	
+
     enumNames: {
-      gallons: 'Galones',
-      liters: 'Litros',
       cubicFeet: 'Pies cúbicos',
       cubicMeters: 'Metros cúbicos',
+      gallons: 'Galones',
+      liters: 'Litros',
     },
+    needed: 'Necesitarás tu nombre de usuario, contraseña y el ID/secreto de cliente de %s',
+    support: 'Para ayuda y soporte, visita %s',
+    thankYou: 'Gracias por instalar Homebridge Flume',
 
     title: {
       clientId: 'ID de cliente',
@@ -38,13 +37,13 @@ const es = {
       verbose: 'Registro detallado',
     },
   },
-  
+
   customChar: {
     lastMonth: 'Mes pasado',
     monthUsage: 'Este mes',
     todayUsage: 'Hoy',
   },
-  
+
   errors: {
     badConfig: 'Faltan una o más variables requeridas en la configuración. Por favor, revise la documentación.',
     httpRetry: 'Solicitud fallida. Reintentando en %s minutos…',
@@ -52,12 +51,12 @@ const es = {
     noDevices: 'No se encontraron dispositivos en tu cuenta',
     noRefreshToken: 'No se ha recuperado el token de actualización. Realizando autenticación completa…',
   },
-  
+
   general: {
     brand: 'Flume',
     redacted: '****redacted****',
   },
-  
+
   startup: {
     complete: '✓ Configuración completa.',
     newDevice: 'Agregando nuevo dispositivo:',
@@ -68,7 +67,7 @@ const es = {
       '¿Te gustaría patrocinar este plugin? https://github.com/sponsors/mpatfield',
     ],
   },
-  
+
   status: {
     batteryLow: 'La batería está baja',
     batteryNormal: 'La batería está normal',

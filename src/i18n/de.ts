@@ -1,11 +1,7 @@
 const de = {
 
   config: {
-
     continue: 'Continue %s',
-    needed: 'Sie benötigen Ihren Benutzernamen, Ihr Passwort und Ihre Client-ID/Geheimnis von %s',
-    support: 'Für Hilfe und Unterstützung besuchen Sie bitte %s',
-    thankYou: 'Danke für die Installation homebridge-flume',
 
     description: {
       clientSecret: 'Ihre Flume-Client-ID und Ihr Client-Secret finden Sie unter https://portal.flumetech.com',
@@ -17,11 +13,14 @@ const de = {
     },
 
     enumNames: {
-      gallons: 'Gallonen',
-      liters: 'Liter',
       cubicFeet: 'Kubikfuß',
       cubicMeters: 'Kubikmeter',
+      gallons: 'Gallonen',
+      liters: 'Liter',
     },
+    needed: 'Sie benötigen Ihren Benutzernamen, Ihr Passwort und Ihre Client-ID/Geheimnis von %s',
+    support: 'Für Hilfe und Unterstützung besuchen Sie bitte %s',
+    thankYou: 'Danke für die Installation homebridge-flume',
 
     title: {
       clientId: 'Client ID',
