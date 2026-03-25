@@ -2,7 +2,7 @@
   "name": "homebridge-flume",
   "alias": "Flume",
   "displayName": "Flume",
-  "version": "3.1.16",
+  "version": "3.1.17-beta.0",
   "author": {
     "name": "mpatfield"
   },
@@ -56,7 +56,6 @@
     "url": "https://github.com/sponsors/mpatfield"
   },
   "dependencies": {
-    "@homebridge/plugin-ui-utils": "^2.0.2",
     "axios": "^1.7.2",
     "homebridge-lib": "^7.1.4",
     "jwt-decode": "^4.0.0",
@@ -67,8 +66,6 @@
     "@eslint/js": "^10.0.1",
     "@types/lodash.merge": "^4.6.9",
     "@types/node-persist": "^3.1.8",
-    "esbuild": "^0.27.0",
-    "eslint": "^10.0.2",
     "homebridge": "^2.0.0-beta.0",
     "jiti": "^2.4.2",
     "rimraf": "^6.0.1",
