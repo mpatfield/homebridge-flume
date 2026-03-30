@@ -2,10 +2,11 @@
 
 All notable changes to homebridge-flume will be documented in this file.
 
-## 3.1.17-beta.0 (2026-03-25)
+## 3.1.17 (2026-03-30)
 
 ### Changed
-- Cleanup unnecessary dependencies
+- Updated and cleaned up unnecessary dependencies
+- npm audit fix
 
 ### Notes
 Would you like to see Homebridge Flume in your language? Please consider [getting involved](https://github.com/mpatfield/homebridge-flume/issues/107). No coding experience required!
