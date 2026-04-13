@@ -57,7 +57,7 @@
   },
   "dependencies": {
     "axios": "^1.7.2",
-    "homebridge-lib": "^7.1.4",
+    "homebridge-lib": "^8.0.0",
     "jwt-decode": "^4.0.0",
     "lodash.merge": "^4.6.2",
     "node-persist": "^4.0.4"
