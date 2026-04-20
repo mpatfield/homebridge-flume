@@ -51,10 +51,20 @@
   "bugs": {
     "url": "https://github.com/mpatfield/homebridge-flume/issues"
   },
-  "funding": {
-    "type": "github",
-    "url": "https://github.com/sponsors/mpatfield"
-  },
+  "funding": [
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/mpatfield"
+    },
+    {
+      "type": "paypal",
+      "url": "https://paypal.me/mpatfield"
+    },
+    {
+      "type": "venmo",
+      "url": "https://venmo.com/u/mpatfield"
+    }
+  ],
   "dependencies": {
     "axios": "^1.7.2",
     "homebridge-lib": "^8.0.0",
