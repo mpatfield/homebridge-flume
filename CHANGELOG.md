@@ -2,13 +2,18 @@
 
 All notable changes to homebridge-flume will be documented in this file.
 
+## 3.1.19-beta.0 ()
+
+### Changed
+- Removed `beta` from `homebridge` dependency
+
+### Notes
+Would you like to see Homebridge Flume in your language? Please consider [getting involved](https://github.com/mpatfield/homebridge-flume/issues/107). No coding experience required!
+
 ## 3.1.18 (2026-04-21)
 
 ### Changed
 - Updated dependencies
-
-### Notes
-Would you like to see Homebridge Flume in your language? Please consider [getting involved](https://github.com/mpatfield/homebridge-flume/issues/107). No coding experience required!
 
 ## 3.1.17 (2026-03-30)
 
