@@ -25,7 +25,7 @@ export class FlumePlatform implements DynamicPlatformPlugin {
 
     setLanguage(api.user.configPath());
 
-    this.log.info(
+    this.logIfVerbose(
       'v%s | %s | Node %s | HB v%s | HAP v%s',
       getVersion(),
       process.platform,
@@ -113,7 +113,7 @@ export class FlumePlatform implements DynamicPlatformPlugin {
   }
 
   configureAccessory(accessory: PlatformAccessory): void {
-    this.log.info(strings.startup.restoringDevice, accessory.displayName);
+    this.logIfVerbose(strings.startup.restoringDevice, accessory.displayName);
     this.accessories.set(accessory.context.deviceId, accessory);
   }
   
@@ -122,4 +122,13 @@ export class FlumePlatform implements DynamicPlatformPlugin {
     this.api.unregisterPlatformAccessories(PLUGIN_NAME, PLATFORM_ALIAS, [accessory]);
     this.accessories.delete(accessory.context.deviceId);
   }
+
+  private logIfVerbose(message: string, ...parameters: string[]) {
+  
+    if (!this.config.verbose) {
+      return;
+    }
+
+    this.log.info(message, ...parameters);
+  }  
 }

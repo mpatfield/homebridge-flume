@@ -6,6 +6,7 @@ All notable changes to homebridge-flume will be documented in this file.
 
 ### Changed
 - Removed `beta` from `homebridge` dependency
+- Reduce noisy startup logging
 
 ### Notes
 Would you like to see Homebridge Flume in your language? Please consider [getting involved](https://github.com/mpatfield/homebridge-flume/issues/107). No coding experience required!
