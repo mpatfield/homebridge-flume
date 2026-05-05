@@ -2,7 +2,7 @@
 
 All notable changes to homebridge-flume will be documented in this file.
 
-## 3.1.19-beta.0 ()
+## 3.1.19-beta.1 ()
 
 ### Changed
 - Removed `beta` from `homebridge` dependency
