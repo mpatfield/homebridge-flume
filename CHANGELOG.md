@@ -2,11 +2,12 @@
 
 All notable changes to homebridge-flume will be documented in this file.
 
-## 3.1.19-beta.1 ()
+## 3.1.19 (2026-05-06)
 
 ### Changed
 - Removed `beta` from `homebridge` dependency
-- Reduce noisy startup logging
+- Reduced noisy startup logging
+- Updated dependencies
 
 ### Notes
 Would you like to see Homebridge Flume in your language? Please consider [getting involved](https://github.com/mpatfield/homebridge-flume/issues/107). No coding experience required!
