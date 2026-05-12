@@ -2,10 +2,10 @@
 
 All notable changes to homebridge-flume will be documented in this file.
 
-## 3.1.20-beta.0 ()
+## 3.1.20 (2026-05-12)
 
 ### Fixed
-- Potential translation system bug
+- Potential translation system crash
 
 ### Notes
 Would you like to see Homebridge Flume in your language? Please consider [getting involved](https://github.com/mpatfield/homebridge-flume/issues/107). No coding experience required!
