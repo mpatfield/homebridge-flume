@@ -2,10 +2,13 @@
 
 All notable changes to homebridge-flume will be documented in this file.
 
-## 3.1.21-beta.0 ()
+## 3.1.21 (2026-05-30)
 
 ### Changed
 - Updated dependencies
+
+### Notes
+Please consider giving this plugin a ⭐️ on [GitHub](https://github.com/mpatfield/homebridge-flume) if you're finding it useful!
 
 ## 3.1.20 (2026-05-12)
 
