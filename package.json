@@ -85,5 +85,9 @@
   "directories": {
     "schemas": "schemas/"
   },
+  "allowScripts": {
+    "esbuild": true,
+    "fsevents": true
+  },
   "license": "Apache-2.0"
 }
