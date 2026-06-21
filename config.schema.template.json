@@ -48,6 +48,13 @@
         "title": "${config.title.useNotifications}",
         "description": "${config.description.useNotifications}"
       },
+      "silentLeakAlerts": {
+        "type": "boolean",
+        "title": "${config.title.silentLeakAlerts}",
+        "description": "${config.description.silentLeakAlerts}",
+        "default": false,
+        "required": false
+      },
       "units": {
         "type": "string",
         "title": "${config.title.units}",
@@ -93,6 +100,7 @@
         "clientSecret",
         "refreshInterval",
         "useNotifications",
+        "silentLeakAlerts",
         "units",
         "disableDeviceLogging",
         "verbose",

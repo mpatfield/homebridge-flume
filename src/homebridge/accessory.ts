@@ -29,7 +29,9 @@ export class FlumeAccessory {
   private isBatteryLow: boolean = false;
   private isDisconnected: boolean = true;
 
-  private readonly charLeakDetected: typeof Characteristic.LeakDetected;
+  private readonly charLeakDetected: typeof Characteristic.LeakDetected | typeof Characteristic.ContactSensorState;
+  private readonly valueActive: number;
+  private readonly valueInactive: number;
   private readonly charStatusLowBattery: typeof Characteristic.StatusLowBattery;
   private readonly charStatusFault: typeof Characteristic.StatusFault;
 
@@ -44,6 +46,7 @@ export class FlumeAccessory {
     private readonly name: string,
     private readonly units: VolumeUnits,
     private readonly disableLogging: boolean,
+    private readonly silentLeakAlerts: boolean = false,
   ) {
 
     this.HAP = platform.api.hap;
@@ -58,14 +61,30 @@ export class FlumeAccessory {
       .setCharacteristic(this.Characteristic.Model, device.productName)
       .setCharacteristic(this.Characteristic.FirmwareRevision, getVersion());
 
-    this.charLeakDetected = this.Characteristic.LeakDetected;
+    this.charLeakDetected = this.silentLeakAlerts ? this.Characteristic.ContactSensorState : this.Characteristic.LeakDetected;
+    this.valueActive = this.silentLeakAlerts
+      ? this.Characteristic.ContactSensorState.CONTACT_NOT_DETECTED
+      : this.Characteristic.LeakDetected.LEAK_DETECTED;
+    this.valueInactive = this.silentLeakAlerts
+      ? this.Characteristic.ContactSensorState.CONTACT_DETECTED
+      : this.Characteristic.LeakDetected.LEAK_NOT_DETECTED;
     this.charStatusLowBattery = this.Characteristic.StatusLowBattery;
     this.charStatusFault = this.Characteristic.StatusFault;
 
-    this.leakService = this.accessory.getService(this.HAP.Service.LeakSensor)
-      || this.accessory.addService(this.HAP.Service.LeakSensor);
+    // Remove the previously-used service type if the user has toggled
+    // silentLeakAlerts since the accessory was first created, so HomeKit
+    // doesn't end up with two leak-state sensors for the same device.
+    const desiredServiceType = this.silentLeakAlerts ? this.Service.ContactSensor : this.Service.LeakSensor;
+    const staleServiceType = this.silentLeakAlerts ? this.Service.LeakSensor : this.Service.ContactSensor;
+    const staleService = this.accessory.getService(staleServiceType);
+    if (staleService) {
+      this.accessory.removeService(staleService);
+    }
 
-    this.isLeakDetected = this.leakService.getCharacteristic(this.charLeakDetected).value === this.charLeakDetected.LEAK_DETECTED;
+    this.leakService = this.accessory.getService(desiredServiceType)
+      || this.accessory.addService(desiredServiceType);
+
+    this.isLeakDetected = this.leakService.getCharacteristic(this.charLeakDetected).value === this.valueActive;
     this.isBatteryLow = this.leakService.getCharacteristic(this.charStatusLowBattery).value === this.charStatusLowBattery.BATTERY_LEVEL_LOW;
     this.isDisconnected = this.leakService.getCharacteristic(this.charStatusFault).value === this.charStatusFault.GENERAL_FAULT;
 
@@ -90,7 +109,7 @@ export class FlumeAccessory {
 
     if (this.device.isLeakDetected !== this.isLeakDetected) {
       this.isLeakDetected = this.device.isLeakDetected;
-      const value = this.isLeakDetected ? this.charLeakDetected.LEAK_DETECTED : this.charLeakDetected.LEAK_NOT_DETECTED;
+      const value = this.isLeakDetected ? this.valueActive : this.valueInactive;
       this.leakService.updateCharacteristic(this.charLeakDetected, value);
       this.logState(this.isLeakDetected ? LogLevel.ERROR : LogLevel.INFO, this.isLeakDetected ? strings.status.leakDetected : strings.status.leakNotDetected);
     }

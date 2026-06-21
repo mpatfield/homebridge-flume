@@ -29,6 +29,7 @@ export type FlumeConfig = PlatformConfig & {
   clientSecret: string,
   refreshInterval: number,
   useNotifications: boolean,
+  silentLeakAlerts?: boolean,
   units?: VolumeUnits,
   excludeDevices?: string[],
   disableDeviceLogging: boolean,
