@@ -2,13 +2,21 @@
 
 All notable changes to homebridge-flume will be documented in this file.
 
-## 3.1.22 (2026-06-15)
+## 3.1.23-beta.0 ()
+
+### Added
+- Ability to select sensor type (e.g. leak, contact, occupancy, motion) to allow for lower priority notifications
 
 ### Changed
 - Updated dependencies
 
 ### Notes
 Please consider giving this plugin a ⭐️ on [GitHub](https://github.com/mpatfield/homebridge-flume) if you're finding it useful!
+
+## 3.1.22 (2026-06-15)
+
+### Changed
+- Updated dependencies
 
 ## 3.1.21 (2026-05-30)
 
