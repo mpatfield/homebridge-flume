@@ -12,17 +12,20 @@ const en = {
       disableDeviceLogging: 'If true, then accessory status changes will not be logged',
       excludeDevices: 'Look for "Adding new device: [Device ID]" in the logs',
       refreshInterval: 'Number of minutes between requests to Flume for leak information',
-      silentLeakAlerts: 'If true, leaks use a Contact Sensor instead of a Leak Sensor, avoiding a critical alert in the Home app',
       units: 'Volume units to use for custom characteristics',
       useNotifications: 'If true, an unread usage alert notification will be considered a leak',
       verbose: 'Enable additional debug logging',
     },
 
     enumNames: {
-      gallons: 'Gallons',
-      liters: 'Liters',
+      contactSensor: 'Contact',
       cubicFeet: 'Cubic Feet',
       cubicMeters: 'Cubic Meters',
+      gallons: 'Gallons',
+      leakSensor: 'Leak (Default)',
+      liters: 'Liters',
+      occupancySensor: 'Occupancy',
+      motionSensor: 'Motion',
     },
 
     title: {
@@ -33,7 +36,7 @@ const en = {
       excludeDevices: 'Exclude Devices',
       password: 'Flume Password',
       refreshInterval: 'Refresh Interval',
-      silentLeakAlerts: 'Use Silent Leak Notifications',
+      sensorType: 'Sensor Type',
       units: 'Units',
       useNotifications: 'Use Unread Usage Notifications',
       username: 'Flume Username',

@@ -109,7 +109,7 @@ export class FlumePlatform implements DynamicPlatformPlugin {
     }
 
     const units = this.config.units ?? VolumeUnits.GALLONS;
-    new FlumeAccessory(this, accessory, device,  name, units, this.config.disableDeviceLogging, this.config.silentLeakAlerts ?? false);
+    new FlumeAccessory(this, accessory, device,  name, this.config.sensorType, units, this.config.disableDeviceLogging);
   }
 
   configureAccessory(accessory: PlatformAccessory): void {

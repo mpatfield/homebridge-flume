@@ -5,7 +5,7 @@ import { FlumePlatform } from './platform.js';
 import { strings } from '../i18n/i18n.js';
 
 import { Device } from '../model/device.js';
-import { VolumeUnits } from '../model/types.js';
+import { CharacteristicType, SensorType, VolumeUnits } from '../model/types.js';
 
 import getVersion from '../tools/version.js';
 
@@ -29,9 +29,6 @@ export class FlumeAccessory {
   private isBatteryLow: boolean = false;
   private isDisconnected: boolean = true;
 
-  private readonly charLeakDetected: typeof Characteristic.LeakDetected | typeof Characteristic.ContactSensorState;
-  private readonly valueActive: number;
-  private readonly valueInactive: number;
   private readonly charStatusLowBattery: typeof Characteristic.StatusLowBattery;
   private readonly charStatusFault: typeof Characteristic.StatusFault;
 
@@ -44,9 +41,9 @@ export class FlumeAccessory {
     private readonly accessory: PlatformAccessory,
     private readonly device: Device,
     private readonly name: string,
+    private readonly sensorType: SensorType,
     private readonly units: VolumeUnits,
     private readonly disableLogging: boolean,
-    private readonly silentLeakAlerts: boolean = false,
   ) {
 
     this.HAP = platform.api.hap;
@@ -61,30 +58,24 @@ export class FlumeAccessory {
       .setCharacteristic(this.Characteristic.Model, device.productName)
       .setCharacteristic(this.Characteristic.FirmwareRevision, getVersion());
 
-    this.charLeakDetected = this.silentLeakAlerts ? this.Characteristic.ContactSensorState : this.Characteristic.LeakDetected;
-    this.valueActive = this.silentLeakAlerts
-      ? this.Characteristic.ContactSensorState.CONTACT_NOT_DETECTED
-      : this.Characteristic.LeakDetected.LEAK_DETECTED;
-    this.valueInactive = this.silentLeakAlerts
-      ? this.Characteristic.ContactSensorState.CONTACT_DETECTED
-      : this.Characteristic.LeakDetected.LEAK_NOT_DETECTED;
     this.charStatusLowBattery = this.Characteristic.StatusLowBattery;
     this.charStatusFault = this.Characteristic.StatusFault;
 
-    // Remove the previously-used service type if the user has toggled
-    // silentLeakAlerts since the accessory was first created, so HomeKit
-    // doesn't end up with two leak-state sensors for the same device.
-    const desiredServiceType = this.silentLeakAlerts ? this.Service.ContactSensor : this.Service.LeakSensor;
-    const staleServiceType = this.silentLeakAlerts ? this.Service.LeakSensor : this.Service.ContactSensor;
-    const staleService = this.accessory.getService(staleServiceType);
-    if (staleService) {
-      this.accessory.removeService(staleService);
+    if (this.sensorType === undefined) {
+      this.sensorType = SensorType.LeakSensor;
     }
 
-    this.leakService = this.accessory.getService(desiredServiceType)
-      || this.accessory.addService(desiredServiceType);
+    this.leakService = this.accessory.getService(this.Service[this.sensorType])
+      || this.accessory.addService(this.Service[this.sensorType]);
 
-    this.isLeakDetected = this.leakService.getCharacteristic(this.charLeakDetected).value === this.valueActive;
+    Object.values(SensorType).filter(type => type !== this.sensorType).forEach( type => {
+      const staleService = this.accessory.getService(this.Service[type]);
+      if (staleService) {
+        this.accessory.removeService(staleService);
+      }
+    });
+
+    this.isLeakDetected = this.leakService.getCharacteristic(this.characteristic).value === 1;
     this.isBatteryLow = this.leakService.getCharacteristic(this.charStatusLowBattery).value === this.charStatusLowBattery.BATTERY_LEVEL_LOW;
     this.isDisconnected = this.leakService.getCharacteristic(this.charStatusFault).value === this.charStatusFault.GENERAL_FAULT;
 
@@ -99,6 +90,27 @@ export class FlumeAccessory {
     this.updateCharacteristics();
   }
 
+  private get characteristic() {
+
+    let characteristicType: CharacteristicType;
+    switch (this.sensorType) {
+    case SensorType.ContactSensor:
+      characteristicType = CharacteristicType.ContactDetected;
+      break;
+    case SensorType.LeakSensor:
+      characteristicType = CharacteristicType.LeakDetected;
+      break;
+    case SensorType.MotionSensor:
+      characteristicType = CharacteristicType.MotionDetected;
+      break;
+    case SensorType.OccupancySensor:
+      characteristicType = CharacteristicType.OccupancyDetected;
+      break;
+    }
+
+    return this.Characteristic[characteristicType];
+  }
+
   private handleUpdate(id: string): void {
     if (id === this.device.id) {
       this.updateCharacteristics();
@@ -109,8 +121,8 @@ export class FlumeAccessory {
 
     if (this.device.isLeakDetected !== this.isLeakDetected) {
       this.isLeakDetected = this.device.isLeakDetected;
-      const value = this.isLeakDetected ? this.valueActive : this.valueInactive;
-      this.leakService.updateCharacteristic(this.charLeakDetected, value);
+      const value = this.isLeakDetected ? 1 : 0;
+      this.leakService.updateCharacteristic(this.characteristic, value);
       this.logState(this.isLeakDetected ? LogLevel.ERROR : LogLevel.INFO, this.isLeakDetected ? strings.status.leakDetected : strings.status.leakNotDetected);
     }
 
@@ -146,7 +158,7 @@ export class FlumeAccessory {
   private clearCustomCharacteristics() {
 
     const allowedUUIDs = new Set([
-      this.charLeakDetected.UUID,
+      this.characteristic.UUID,
       this.charStatusLowBattery.UUID,
       this.charStatusFault.UUID,
     ]);

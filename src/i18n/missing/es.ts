@@ -1,10 +1,6 @@
-const de = {
+const es = {
 
   config: {
-
-    description: {
-      useNotifications: 'If true, an unread usage alert notification will be considered a leak',
-    },
 
     enumNames: {
       contactSensor: 'Contact',
@@ -15,11 +11,10 @@ const de = {
 
     title: {
       sensorType: 'Sensor Type',
-      useNotifications: 'Use Unread Usage Notifications',
     },
   },
   
 
 };
 
-export default de;
+export default es;

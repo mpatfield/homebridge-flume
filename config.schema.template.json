@@ -48,12 +48,13 @@
         "title": "${config.title.useNotifications}",
         "description": "${config.description.useNotifications}"
       },
-      "silentLeakAlerts": {
-        "type": "boolean",
-        "title": "${config.title.silentLeakAlerts}",
-        "description": "${config.description.silentLeakAlerts}",
-        "default": false,
-        "required": false
+      "sensorType" : {
+        "type": "string",
+        "title": "${config.title.sensorType}",
+        "enum": ["LeakSensor", "ContactSensor", "MotionSensor", "OccupancySensor"],
+        "enumNames": ["${config.enumNames.leakSensor}", "${config.enumNames.contactSensor}", "${config.enumNames.motionSensor}", "${config.enumNames.occupancySensor}"],
+        "default": "LeakSensor",
+        "required": true
       },
       "units": {
         "type": "string",
@@ -100,7 +101,7 @@
         "clientSecret",
         "refreshInterval",
         "useNotifications",
-        "silentLeakAlerts",
+        "sensorType",
         "units",
         "disableDeviceLogging",
         "verbose",
