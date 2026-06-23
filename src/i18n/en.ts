@@ -18,10 +18,14 @@ const en = {
     },
 
     enumNames: {
-      gallons: 'Gallons',
-      liters: 'Liters',
+      contactSensor: 'Contact',
       cubicFeet: 'Cubic Feet',
       cubicMeters: 'Cubic Meters',
+      gallons: 'Gallons',
+      leakSensor: 'Leak (Default)',
+      liters: 'Liters',
+      occupancySensor: 'Occupancy',
+      motionSensor: 'Motion',
     },
 
     title: {
@@ -32,6 +36,7 @@ const en = {
       excludeDevices: 'Exclude Devices',
       password: 'Flume Password',
       refreshInterval: 'Refresh Interval',
+      sensorType: 'Sensor Type',
       units: 'Units',
       useNotifications: 'Use Unread Usage Notifications',
       username: 'Flume Username',
@@ -63,11 +68,6 @@ const en = {
     newDevice: 'Adding new device:',
     removeDevice: 'Removing device:',
     restoringDevice: 'Restoring device:',
-    welcome: [
-      'Please ★ this plugin on GitHub if you\'re finding it useful! https://github.com/mpatfield/homebridge-flume',
-      'Would you like to sponsor this plugin? https://github.com/sponsors/mpatfield',
-      'Want to see this plugin in your own language? Please visit https://github.com/mpatfield/homebridge-flume/issues/107',
-    ],
   },
 
   status: {

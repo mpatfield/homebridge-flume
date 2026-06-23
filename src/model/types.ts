@@ -22,6 +22,20 @@ export interface FlumeResponse<T> extends AxiosResponse {
   data: T[];
 }
 
+export enum SensorType {
+  ContactSensor = 'ContactSensor',
+  LeakSensor = 'LeakSensor',
+  MotionSensor = 'MotionSensor',
+  OccupancySensor = 'OccupancySensor',
+}
+
+export enum CharacteristicType {
+  ContactDetected = 'ContactSensorState',
+  LeakDetected = 'LeakDetected',
+  MotionDetected = 'MotionDetected',
+  OccupancyDetected = 'OccupancyDetected',
+}
+
 export type FlumeConfig = PlatformConfig & {
   username: string,
   password: string,
