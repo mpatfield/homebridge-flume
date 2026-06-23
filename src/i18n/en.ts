@@ -68,11 +68,6 @@ const en = {
     newDevice: 'Adding new device:',
     removeDevice: 'Removing device:',
     restoringDevice: 'Restoring device:',
-    welcome: [
-      'Please ★ this plugin on GitHub if you\'re finding it useful! https://github.com/mpatfield/homebridge-flume',
-      'Would you like to sponsor this plugin? https://github.com/sponsors/mpatfield',
-      'Want to see this plugin in your own language? Please visit https://github.com/mpatfield/homebridge-flume/issues/107',
-    ],
   },
 
   status: {

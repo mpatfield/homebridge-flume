@@ -78,8 +78,7 @@ export class FlumePlatform implements DynamicPlatformPlugin {
       }
     });
 
-    const randIndex = Math.floor(Math.random() * strings.startup.welcome.length);
-    this.log.info(strings.startup.complete, strings.startup.welcome[randIndex]);
+    this.log.info(strings.startup.complete);
   }
 
   private shutdown(): void {

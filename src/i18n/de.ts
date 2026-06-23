@@ -60,10 +60,6 @@ const de = {
     newDevice: 'Neues Gerät hinzufügen:',
     removeDevice: 'Gerät entfernen:',
     restoringDevice: 'Gerät wiederherstellen:',
-    welcome: [
-      'Bitte ★ dieses Plugin auf GitHub, wenn Sie es nützlich finden! https://github.com/mpatfield/homebridge-flume',
-      'Möchten Sie dieses Plugin sponsern? https://github.com/sponsors/mpatfield',
-    ],
   },
 
   status: {
