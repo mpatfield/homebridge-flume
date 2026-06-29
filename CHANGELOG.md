@@ -2,16 +2,18 @@
 
 All notable changes to homebridge-flume will be documented in this file.
 
+## 3.1.24-beta. ()
+
+### Changed
+- ⚠️ Dropped [official support](https://github.com/homebridge/homebridge/wiki/How-To-Update-Node.js) for Node.js v20 and added Node.js v26
+
+### Notes
+Please consider giving this plugin a ⭐️ on [GitHub](https://github.com/mpatfield/homebridge-flume) if you're finding it useful!
+
 ## 3.1.23 (2026-06-26)
 
 ### Added
 - Ability to select sensor type (e.g. leak, contact, occupancy, motion) to allow for lower priority notifications (Thanks, [@kfechner](https://github.com/sponsors/kfechner)!)
-
-### Changed
-- Updated dependencies
-
-### Notes
-Please consider giving this plugin a ⭐️ on [GitHub](https://github.com/mpatfield/homebridge-flume) if you're finding it useful!
 
 ## 3.1.22 (2026-06-15)
 
