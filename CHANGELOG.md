@@ -15,6 +15,9 @@ Please consider giving this plugin a ⭐️ on [GitHub](https://github.com/mpatf
 ### Added
 - Ability to select sensor type (e.g. leak, contact, occupancy, motion) to allow for lower priority notifications (Thanks, [@kfechner](https://github.com/sponsors/kfechner)!)
 
+### Changed
+- Updated dependencies
+
 ## 3.1.22 (2026-06-15)
 
 ### Changed
