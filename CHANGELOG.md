@@ -2,13 +2,11 @@
 
 All notable changes to homebridge-flume will be documented in this file.
 
-## 3.1.24-beta. ()
-
-### Fixed
-- Vulnerability
+## 3.1.24-beta.0 (2026-07-21)
 
 ### Changed
 - ⚠️ Dropped [official support](https://github.com/homebridge/homebridge/wiki/How-To-Update-Node.js) for Node.js v20 and added Node.js v26
+- Updated dependencies
 
 ### Notes
 Please consider giving this plugin a ⭐️ on [GitHub](https://github.com/mpatfield/homebridge-flume) if you're finding it useful!
