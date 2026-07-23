@@ -6,6 +6,7 @@ All notable changes to homebridge-flume will be documented in this file.
 
 ### Changed
 - ⚠️ Dropped [official support](https://github.com/homebridge/homebridge/wiki/How-To-Update-Node.js) for Node.js v20 and added Node.js v26
+- Traducciones al español actualizadas. ¡Gracias, [@dcompane](https://github.com/sponsors/dcompane)!
 - Updated dependencies
 
 ### Notes

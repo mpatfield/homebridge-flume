@@ -14,10 +14,14 @@ const es = {
     },
 
     enumNames: {
+      contactSensor: 'Contacto',
       cubicFeet: 'Pies cúbicos',
       cubicMeters: 'Metros cúbicos',
       gallons: 'Galones',
+      leakSensor: 'Perdida (Default)',
       liters: 'Litros',
+      motionSensor: 'Movimiento',
+      occupancySensor: 'Ocupación',
     },
     needed: 'Necesitarás tu nombre de usuario, contraseña y el ID/secreto de cliente de %s',
     support: 'Para ayuda y soporte, visita %s',
@@ -31,6 +35,7 @@ const es = {
       excludeDevices: 'Excluir dispositivos',
       password: 'Contraseña de Flume',
       refreshInterval: 'Intervalo de actualización',
+      sensorType: 'Tipo de sensor',
       units: 'Unidades',
       useNotifications: 'Usar notificaciones de uso no leídas',
       username: 'Usuario de Flume',
