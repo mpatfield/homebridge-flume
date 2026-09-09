@@ -63,7 +63,6 @@ const es = {
   },
 
   startup: {
-    complete: '✓ Configuración completa.',
     newDevice: 'Agregando nuevo dispositivo:',
     removeDevice: 'Eliminando dispositivo:',
     restoringDevice: 'Restaurando dispositivo:',

@@ -76,8 +76,6 @@ export class FlumePlatform implements DynamicPlatformPlugin {
         this.removeAccessory(accessory);
       }
     });
-
-    this.log.info(strings.startup.complete);
   }
 
   private shutdown(): void {

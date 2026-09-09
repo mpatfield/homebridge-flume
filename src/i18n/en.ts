@@ -64,7 +64,6 @@ const en = {
   },
 
   startup: {
-    complete: '✓ Setup complete.',
     newDevice: 'Adding new device:',
     removeDevice: 'Removing device:',
     restoringDevice: 'Restoring device:',

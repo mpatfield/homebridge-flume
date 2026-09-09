@@ -56,7 +56,6 @@ const de = {
   },
 
   startup: {
-    complete: '✓ Einrichtung abgeschlossen.',
     newDevice: 'Neues Gerät hinzufügen:',
     removeDevice: 'Gerät entfernen:',
     restoringDevice: 'Gerät wiederherstellen:',
